@@ -1,0 +1,167 @@
+<div class="form-horizontal">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1 margin">
+      <h4 class="color-blue"><b>1. ¿Qué días de la semana se dictará el curso?</b></h4>
+      <div class="form-group has-feedback" style="font-size: 16px;">
+
+        <div class="row">
+          <div class="checkbox col-md-4 col-md-offset-1 col-sm-offset-1 col-xs-offset-1" onclick="mostrar('lunes')">
+            <label class="control-label"><input name="lunesChk" id="lunesChk" type="checkbox" class="check">Lunes</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="checkbox col-md-4 col-md-offset-1 col-sm-offset-1 col-xs-offset-1" onclick="mostrar('martes')">
+            <label class="control-label"><input name="martesChk" id="martesChk" type="checkbox" class="check">Martes</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="checkbox col-md-4 col-md-offset-1 col-sm-offset-1 col-xs-offset-1" onclick="mostrar('miercoles')">
+            <label class="control-label"><input name="miercolesChk" id="miercolesChk" value="miercoles" class="check" type="checkbox">Miércoles</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="checkbox col-md-4 col-md-offset-1 col-sm-offset-1 col-xs-offset-1" onclick="mostrar('jueves')">
+            <label class="control-label"><input name="juevesChk" id="juevesChk" value="jueves" type="checkbox" class="check">Jueves</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="checkbox col-md-4 col-md-offset-1 col-sm-offset-1 col-xs-offset-1" onclick="mostrar('viernes')">
+            <label class="control-label"><input name="viernesChk" id="viernesChk" value="viernes" type="checkbox" class="check">Viernes</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="checkbox col-md-4 col-md-offset-1 col-sm-offset-1 col-xs-offset-1" onclick="mostrar('sabado')">
+            <label class="control-label"><input name="sabadoChk" id="sabadoChk" value="sabado" type="checkbox" class="check">Sábados</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="checkbox col-md-4 col-md-offset-1 col-sm-offset-1 col-xs-offset-1" onclick="mostrar('domingo')">
+            <label class="control-label"><input name="domingoChk" id="domingoChk" value="domingo" type="checkbox" class="check">Domingo</label>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div id="pregunta" style="display: none; margin-bottom: 15px!important;">
+        <h4 class="color-blue">
+          <b>2. ¿En qué horario se darán las clases?</b>
+        </h4>
+        <h3>
+          <small>Ingresa los horarios en formato hh:mm</small>
+        </h3>
+      </div>
+      <div class="form-horizontal">
+        <div class="form-group has-feedback" id="lunes" style="display: none;">
+          <div class="col-xs-12">
+            <%= f.label :lunes, "Lunes:", class: "control-label col-sm-2" %>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <%= text_field(:lunes, :inicio, class: 'form-control', placeholder: "Hora Inicio", style:'margin-bottom:10px!important;') %>
+            <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <%= text_field(:lunes, :fin, class: 'form-control', placeholder: "Hora finalización", style:'margin-bottom:10px!important;') %>
+            <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="form-group has-feedback" id="martes" style="display: none;">
+          <div class="col-xs-12">
+            <%= f.label :martes, "Martes:", class: "control-label col-sm-2" %>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <%= text_field(:martes, :inicio, class: 'form-control', placeholder: "Hora Inicio", style:'margin-bottom:10px!important;') %>
+            <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <%= text_field(:martes, :fin, class: 'form-control',
+                           placeholder: "Hora finalización", style:'margin-bottom:10px!important;') %>
+            <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="form-group has-feedback" id="miercoles" style="display: none;">
+          <div class="col-xs-12">
+            <%= f.label :miercoles, "Miércoles:", class: "control-label col-sm-2" %>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <%= text_field(:miercoles, :inicio, class: 'form-control', placeholder: "Hora Inicio", style:'margin-bottom:10px!important;') %>
+            <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <%= text_field(:miercoles, :fin, class: 'form-control',
+                           placeholder: "Hora finalización", style:'margin-bottom:10px!important;') %>
+            <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="form-group has-feedback" id="jueves" style="display: none;">
+          <div class="col-xs-12">
+            <%= f.label :jueves, "Jueves:", class: "control-label col-sm-2" %>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <%= text_field(:jueves, :inicio, class: 'form-control', placeholder: "Hora Inicio", style:'margin-bottom:10px!important;') %>
+            <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <%= text_field(:jueves, :fin, class: 'form-control',
+                           placeholder: "Hora finalización", style:'margin-bottom:10px!important;') %>
+            <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="form-group has-feedback" id="viernes" style="display: none;">
+          <div class="col-xs-12">
+            <%= f.label :viernes, "Viernes:", class: "control-label col-sm-2" %>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <%= text_field(:viernes, :inicio, class: 'form-control', placeholder: "Hora Inicio", style:'margin-bottom:10px!important;') %>
+            <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <%= text_field(:viernes, :fin, class: 'form-control',
+                           placeholder: "Hora finalización", style:'margin-bottom:10px!important;') %>
+            <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="form-group has-feedback" id="sabado" style="display: none;">
+          <div class="col-xs-12">
+            <%= f.label :sabado, "Sábado:", class: "control-label col-sm-2" %>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <%= text_field(:sabado, :inicio, class: 'form-control', placeholder: "Hora Inicio", style:'margin-bottom:10px!important;') %>
+            <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <%= text_field(:sabado, :fin, class: 'form-control',
+                           placeholder: "Hora finalización", style:'margin-bottom:10px!important;') %>
+            <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="form-group has-feedback" id="domingo" style="display: none;">
+          <div class="col-xs-12">
+            <%= f.label :domingo, "Domingo:", class: "control-label col-sm-2" %>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <%= text_field(:domingo, :domingo, class: 'form-control', placeholder: "Hora Inicio", style:'margin-bottom:10px!important;') %>
+            <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <%= text_field(:domingo, :fin, class: 'form-control',
+                           placeholder: "Hora finalización", style:'margin-bottom:10px!important;') %>
+            <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div>
+        <button type="button" class="btn btn-primary prev-step col-xs-3 col-xs-offset-3" style="margin-top:15px;">Anterior</button>
+      </div>
+      <div>
+        <button type="button" class="btn btn-danger next-step-calendar col-xs-3 col-xs-offset-1" style="margin-top:15px;">Siguiente</button>
+      </div>
+    </div>
+  </div>
+</div>

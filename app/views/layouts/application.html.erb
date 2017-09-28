@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= full_title(yield(:title)) %></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+
+  <meta property="og:url"         content="<%= yield_meta_tag(:url_web, "https://#{request.host}") %>" />
+  <meta property="og:title"         content='<%= yield_meta_tag(:title, 'Sumemos Uno Mas') %>' />
+  <meta property="og:description"   content='<%= yield_meta_tag(:description, 'Es un sitio web que brinda oportunidad de inscripción gratuita a cursos de interés a personas que no tengan los medios necesarios para hacerlo.') %>' />
+  <meta property="og:image"         content="<%= yield_meta_tag(:url, "https://#{request.host}/sumemos-uno-mas-01.png") %>" />
+
+
+  <meta name="twitter:card" content="summary"/>
+  <meta name="twitter:description" content="<%= yield_meta_tag(:description, 'Es un sitio web que brinda oportunidad de inscripción gratuita a cursos de interés a personas que no tengan los medios necesarios para hacerlo.') %>"/>
+  <meta name="twitter:title" content="<%= yield_meta_tag(:title, 'Sumemos Uno Mas') %>"/>
+  <meta name="twitter:site" content="@SumemosUnoMas"/>
+  <meta name="twitter:domain" content="sumemos-uno-mas.herokuapp.com"/>
+  <meta name="twitter:image:src" content="<%= yield_meta_tag(:url, "https://#{request.host}/sumemos-uno-mas-01.png") %>"/>
+  <meta name="twitter:domain" content="SumemosUnoMas"/>
+
+  <link type="image/x-icon" href="<%= "https://#{request.host}/sumemos-uno-mas-01.png"%>" rel="shortcut icon" />
+
+  <%= stylesheet_link_tag 'application', media: 'all',
+                          'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= render 'layouts/shim' %>
+</head>
+<body class="skin-blue-light sidebar-mini sidebar-collapse">
+<div class="wrapper">
+  <%= render 'layouts/header' %>
+  <div class="content-wrapper">
+    <% flash.each do |message_type, message| %>
+        <%= content_tag :section, class: "alert alert-#{message_type}" do -%>
+            <%= message %>
+            <button type="button" class="close" data-dismiss="alert">
+              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <% end -%>
+    <% end %>
+    <%= yield %>
+  </div>
+</div>
+
+</body>
+</html>

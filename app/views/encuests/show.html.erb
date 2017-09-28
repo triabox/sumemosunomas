@@ -1,0 +1,56 @@
+<section class="content-header">
+  <h1>Encuestas</h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-home"></i>Inicio
+    </a></li>
+    <li class="active pull">Encuestas</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-12 col-lg-12">
+      <% if @mis_encuestas.any? %>
+          <% @mis_encuestas.each do |encuesta| %>
+              <div class="box box-primary col-md-8 col-sm-12 col-xs-12 col-md-offset-2">
+                <div class="box-body box-profile">
+                  <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                      <h4><%= "Encuesta realizada por: " %>
+                        <strong>
+                          <%= encuesta.encuestador.nameAndLastname %>
+                        </strong>
+                        <% encuesta.puntuacion.times do %>
+                            <i class="fa fa-star stars pull-right" data-no-turbolink="false"></i>
+                        <% end %>
+                      </h4>
+                      <br>
+                      <blockquote>
+                        <p class="comentario">
+                          <%= '"' + encuesta.comentario + '"' unless encuesta.comentario.empty? %>
+                        </p>
+                      </blockquote>
+                      <div class=" col-md-11 col-xs-11">
+                        <ul class="list-group list-group-unbordered">
+                          <% encuesta.cuestionarios.each_with_index do |cuestionario, index| %>
+                              <li class="list-group-item">
+                                <%= (index + 1).to_s + ". " + cuestionario.pregunta + ": " %>
+                                <% cuestionario.cantEstrellas.times do %>
+                                    <i class="fa fa-star stars" data-no-turbolink="false"></i>
+                                <% end %>
+                                <br>
+                                <p class="comentario"> <%= '- "' + cuestionario.respuesta + '"' unless cuestionario.respuesta.empty? %></p>
+                              </li>
+                          <% end %>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+

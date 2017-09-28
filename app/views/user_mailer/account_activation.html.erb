@@ -1,0 +1,10 @@
+<h1>Sumemos uno más</h1>
+
+<p>Hola <%= @user.name %>,</p>
+
+<p>
+  Bienvenido a Sumemos uno más! Clickeá en el siguiente link para activar tu cuenta:
+</p>
+
+<%= link_to "Activar", edit_account_activation_url(@user.activation_token,
+                                                    email: @user.email), 'data-no-turbolink' => false  %>

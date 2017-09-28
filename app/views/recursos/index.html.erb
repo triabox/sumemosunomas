@@ -1,0 +1,81 @@
+<section class="content-header">
+  <h1 style="visibility: hidden">Materiales Solicitados</h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-home"></i>Inicio
+    </a></li>
+    <li class="active pull">Materiales</li>
+  </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+  <!-- row -->
+  <% if @recursos.any? %>
+      <div class="row">
+        <%= render :partial => 'filtrar_recursos' %>
+      </div>
+      <div class="col-md-6 col-md-offset-3">
+        <div class="row">
+          <ul class="timeline">
+            <li class="time-label">
+                  <span class="bg-green">
+                    Materiales
+                  </span>
+            </li>
+            <% @recursos.each_with_index do |recurso, index| %>
+                <!-- The time line -->
+                <!-- timeline item -->
+                <li>
+                  <i class="fa fa-thumbs-up bg-aqua"></i>
+                  <div class="timeline-item">
+                    <div data-toggle="collapse" id="sin-subrayar" href="#collapse<%= index %>">
+                      <h4 class="timeline-header" style="padding: 5px 20px;">
+                        <a><%= link_to recurso.nombre, recurso.curso, style: 'font-size: 18px; color:#444444;', 'data-no-turbolink' => false %></a>
+                      </h4>
+                    </div>
+
+                    <div id="collapse<%= index %>" class="panel-collapse collapse">
+                      <div class="timeline-body" style="margin:5px 15px;">
+                        <h5>
+                          <b>Descripción: </b><%= recurso.description %><br><br>
+                          <b>Categoría: </b><%= recurso.tipe %>
+                        </h5>
+                        <h5><b>Solicitado
+                          por </b><%= link_to recurso.user.nameAndLastname, recurso.user, style: 'color:#444444;', 'data-no-turbolink' => false %>
+                          para el
+                          curso <%= link_to recurso.curso.nombre, recurso.curso, style: 'color:#444444;', 'data-no-turbolink' => false %>
+                        </h5>
+                        <h5><i class="fa fa-map-marker"></i> <%= recurso.curso.location.address %></h5>
+                      </div>
+
+                    <div class="timeline-footer" style="margin-left:15px; margin-bottom: 10px;">
+                      <% if es_solicitante_de(recurso) %>
+                          <%= link_to "¡Lo conseguí!", conseguido_path(recurso),
+                                      class: "btn btn-success btn-xs", 'data-no-turbolink' => false %>
+                          <%= link_to "Eliminar", recurso_path(recurso), method: :delete, data: {confirm: '¿Está seguro que desea eliminar el material?'},
+                                      class: "btn btn-danger btn-xs", 'data-no-turbolink' => false %>
+                      <% else %>
+                          <%= link_to "Dar material", send_messages_recurso_path(recurso),
+                                      class: 'btn btn-danger btn-xs', 'data-no-turbolink' => false %>
+                      <% end %>
+                    </div>
+                    </div>
+                  </div>
+                </li>
+            <% end %>
+            <li>
+              <i class="fa fa-clock-o bg-gray"></i>
+            </li>
+            <!-- END timeline item -->
+          </ul>
+  <% else %>
+      <h1>
+        <i class="fa fa-thumbs-up"></i>
+        Hurray! Actualmente no hay materiales solicitados
+      </h1>
+  <% end %>
+  </div>
+  <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</section>
+<!-- /.content -->

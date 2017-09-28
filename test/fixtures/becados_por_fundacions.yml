@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  becado_id: 1
+  fundacion_id: 1
+
+two:
+  becado_id: 1
+  fundacion_id: 1

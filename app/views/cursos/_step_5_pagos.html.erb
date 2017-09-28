@@ -1,0 +1,62 @@
+<div class="form-horizontal">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1 margin">
+      <h4 class="color-blue"><b>¿Cuánto costará el curso entero?</b></h4>
+      <div class="form-group has-feedback" style="font-size: 16px;">
+        <%= f.label :monto, "Precio final:", class: "control-label col-md-2" %>
+        <div class="col-md-8 col-xs-12">
+          <%= f.number_field :monto, class: 'form-control', placeholder: "Precio del curso entero", :readonly => (view == 'edit' && !@curso.publicado) %>
+          <i class="fa fa-money form-control-feedback" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="col-md-10 col-md-offset-1 margin">
+      <h4 class="color-blue"><b>¿De qué forma se podrá pagar?</b></h4>
+      <div id="efectivo">
+        <%= f.label :efectivo, "Pagos en efectivo", class: "col-md-5", id: "efectivo" do %>
+            Pagos en efectivo
+            <%= f.check_box :efectivo, class: 'col-md-1 col-md-offset-2', :readonly => (view == 'edit') %>
+        <% end %>
+      </div>
+      <div id="tarjeta" onclick="mostrarTipoPago()">
+        <%= f.label :tarjeta, "", class: "col-md-5 col-sm-1", id: "tarjeta" do %>
+            Pagos con tarjeta
+            <%= f.check_box :tarjeta, class: 'col-md-1 col-sm-11 col-md-offset-2', :readonly => (view == 'edit') %>
+        <% end %>
+      </div>
+    </div>
+    <div id="pago_tarjeta" style="display: none;">
+     <div class="col-md-10 col-md-offset-1" style="margin-top: 20px;">
+      <% if tiene_cuenta_en_todo_pago %>
+          <%= render :partial => 'payment_types/show', :locals => {:tipoDePago => findPaymentTypeDe(current_user)} %>
+      <% else %>
+          <h5 class="color-blue"><b>Completá los datos de tu cuenta: </b></h5>
+          <%= fields_for :payment_type do |payment_type| %>
+              <%= render :partial => 'payment_types/configuracion_pago', :locals => {:payment_type => PaymentType.new, :f => f} %>
+          <% end %>
+      <% end %>
+      </div>
+    </div>
+    <br>
+    <% if view == 'new' %>
+        <div class="form-group">
+          <div>
+            <button type="button" class="btn btn-primary prev-step col-xs-3 col-xs-offset-3" style="margin-top:15px;">Anterior</button>
+          </div>
+          <div>
+            <%= f.submit btn_label, class: "btn btn-danger three-next-step col-xs-3 col-xs-offset-1", style: "margin-top:15px;", id: 'nuevo_curso' %>
+          </div>
+        </div>
+    <% else %>
+        <div class="form-group">
+          <div>
+            <button type="button" class="btn btn-primary prev-step col-xs-3 col-xs-offset-3" style="margin-top:15px;">Anterior</button>
+          </div>
+          <div>
+            <button type="button" class="btn btn-danger three-next-step col-xs-3 col-xs-offset-1" style="margin-top:15px;">Siguiente</button>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>

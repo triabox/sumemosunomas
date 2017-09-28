@@ -1,0 +1,89 @@
+<div class="col-md-12 col-xs-12">
+  <div class="box box-primary">
+    <%= form_tag buscarCursos_path, :method => 'get', :id => "searchCurso" do %>
+        <div class="col-md-4">
+          <div class="box-header">
+            <h3 class="box-title">Búsqueda Avanzada</h3>
+          </div>
+          <div class="box-body">
+            <!-- Minimal style -->
+            <!--Contenido/Profesor -->
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-graduation-cap fa-2x"></i>
+                </div>
+                <%= text_field_tag :nombre, params[:nombre], placeholder: "  Palabras claves", class: 'form-control' %>
+                <%= text_field_tag :profesor, params[:profesor], placeholder: "  Profesor del curso", class: 'form-control' %>
+                <%= select_tag "tipoActividad", options_for_select(@tipo_de_actividades,
+                                                                   :selected => params[:tipoActividad]), {include_blank: 'Seleccione un tipo de Actividad', class: 'form-control'} %>
+
+              </div>
+              <!-- /.input group -->
+            </div>
+            <!-- /.form group -->
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="box-header">
+            <h3 class="box-title">Fechas</h3>
+          </div>
+          <div class="box-body">
+            <div class="form-group  has-feedback">
+              <div class='input-group date' id='datetimepicker6'>
+                             <span class="input-group-addon" id="calendar1">
+                              <span class="fa fa-calendar" aria-hidden="true"></span>
+                          </span>
+                <div onclick="opendatetimepicker('calendar1')">
+                  <%= text_field_tag :fecha_inicio, params[:fecha_inicio], as: :date_field_tag, :input_html => {:id => "datetimepicker"},
+                                     placeholder: "Desde", class: 'form-control' %>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group  has-feedback">
+              <div class='input-group date' id='datetimepicker7'>
+                             <span class="input-group-addon" id="calendar2">
+                              <span class="fa fa-calendar" aria-hidden="true"></span>
+                          </span>
+                <div onclick="opendatetimepicker('calendar2')">
+                  <%= text_field_tag :fecha_fin, params[:fecha_fin], as: :date_field_tag, :input_html => {:id => "datetimepicker"},
+                                     placeholder: "Hasta", class: 'form-control' %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="box-header">
+            <h3 class="box-title">Cercanía</h3>
+          </div>
+          <div class="box-body">
+            <!-- Minimal style -->
+            <!--Contenido/Profesor -->
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-map"></i>
+                </div>
+                <%= text_field_tag :zona, params[:zona], placeholder: "zona", class: "form-control" %>
+              </div>
+              <br><br>
+
+              <div class="col-sm-4 col-sm-offset-8 no-padding">
+                <%= submit_tag "Buscar", class: "btn btn-success" %>
+              </div>
+
+              <!-- /.input group -->
+            </div>
+            <!-- /.form group -->
+          </div>
+        </div>
+
+        <div class="row">
+        </div>
+        </div>
+    <% end %>
+    </div>

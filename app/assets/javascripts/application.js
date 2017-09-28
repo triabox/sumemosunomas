@@ -1,0 +1,9 @@
+//= require jquery
+//= require jquery_ujs
+//= require bootstrap
+//= require turbolinks
+//= require moment
+//= require bootstrap-datetimepicker
+//= require bootstrap-rating-input/src/bootstrap-rating-input
+//= require social-share-button
+//= require_tree .

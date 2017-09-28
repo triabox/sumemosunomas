@@ -1,0 +1,83 @@
+<section class="content-header">
+  <h1 style="visibility: hidden;">Tipo de Pago</h1>
+  <ol class="breadcrumb">
+    <li>
+      <%= link_to current_user, 'data-no-turbolink' => false do %>
+          <i class="fa fa-home"></i>Perfil
+      <% end %>
+    </li>
+    <li class="active">Tipo de pago</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-12 col-lg-12">
+      <div class="box box-primary col-md-6 col-md-offset-3 col-xs-12">
+        <div class="box-body box-profile">
+          <h1><%= title %></h1>
+          <br>
+          <div class="form-horizontal">
+            <%= form_for(@payment_type) do |f| %>
+                <% if @payment_type.errors.any? %>
+                    <div id="error_explanation">
+                      <h2>El tipo de pago no puede ser guardado, se detectaron los siguientes problemas:</h2>
+                      <ul>
+                        <% @payment_type.errors.full_messages.each do |message| %>
+                            <li><%= message %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                <% end %>
+                <div class="form-group has-feedback">
+                  <%= f.label :name, "Nombre:", class: "control-label col-sm-2" %>
+                  <div class="col-sm-10">
+                    <%= f.text_field :name, class: 'form-control', placeholder: "Nombre" %>
+                    <i class="fa fa-pencil form-control-feedback" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="form-group has-feedback">
+                  <%= f.label :description, "Descripción:", class: "control-label col-sm-2" %>
+                  <div class="col-sm-10">
+                    <%= f.text_area :description, class: 'form-control',
+                                    placeholder: "Descripción de la forma de pago" %>
+                    <i class="fa fa-bars form-control-feedback" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="form-group has-feedback">
+                  <%= f.label :tipe, "Tipo:", class: "control-label col-sm-2" %>
+                  <div class="col-sm-3">
+                    <%= f.select(:tipe, options_for_select([['Todo Pago', 'Todo Pago']], @payment_type.tipe), { :class => 'form-control' }) %>
+                  </div>
+                </div>
+                <div class="form-group has-feedback">
+                  <%= f.label :authorization, "Código Autorización:", class: "control-label col-sm-2" %>
+                  <div class="col-sm-10">
+                    <%= f.text_field :authorization, class: 'form-control', placeholder: "Todo Pago: Codigo autorización" %>
+                    <i class="fa fa-check form-control-feedback" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="form-group has-feedback">
+                  <%= f.label :merchant, "Id:", class: "control-label col-sm-2" %>
+                  <div class="col-sm-10">
+                    <%= f.text_field :merchant, class: 'form-control', placeholder: "Todo Pago: Identificador" %>
+                    <i class="fa fa-key form-control-feedback" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="col-md-offset-2 col-sm-3">
+                  <%= f.submit btn_label, class: "btn btn-danger" %>
+                </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+

@@ -1,0 +1,56 @@
+<section class="content home-screen-content" style="padding-top: 0px!important;">
+  <div class="row">
+    <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4 col-xs-height col-home column_one" id="parent-hover">
+      <div class="col-home-content">
+        <div id="parent-title">
+          <h1 class="animated zoomInLeft" id="sin-subrayar">
+            <span class="fa fa-pencil fa-2x" aria-hidden="true" style="margin-bottom: 10px;"></span>
+            <%= link_to listado_cursos_path, class:'font-home', 'data-no-turbolink' => false do %>
+                <br>QUIERO APRENDER
+            <% end %>
+          </h1>
+        </div>
+        <div id="only-when-hover">
+          <div id="linea-titulo"></div>
+          <br>
+          <h1>¡Conocé las distintas clases que podes hacer!</h1>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4 column_two col-home" id="parent-hover">
+      <div class="col-home-content">
+        <div id="parent-title">
+          <h1 class="animated zoomInUp" id="sin-subrayar">
+            <span class="fa fa-book fa-2x" aria-hidden="true" style="margin-bottom: 10px;"></span>
+            <%= link_to crear_curso_path, class:'font-home', 'data-no-turbolink' => false do %>
+              <br>QUIERO ENSEÑAR</h1>
+            <% end %>
+          </h1>
+        </div>
+        <div id="only-when-hover">
+          <div id="linea-titulo"></div>
+          <br>
+          <h1>¡Animate a dar clases!</h1>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4 column_three col-home" id="parent-hover">
+      <div class="col-home-content">
+        <div id="parent-title">
+          <h1 class="animated zoomInRight" id="sin-subrayar">
+            <span class="fa fa-thumbs-up fa-2x" aria-hidden="true" style="margin-bottom: 10px;">
+            </span>
+            <%= link_to listado_recursos_path, class:'font-home', 'data-no-turbolink' => false do %>
+                <br>QUIERO DONAR
+            <% end %>
+          </h1>
+        </div>
+        <div id="only-when-hover">
+          <div id="linea-titulo"></div>
+          <br>
+          <h1>Ayudanos a poder seguir sumando uno más</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

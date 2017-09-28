@@ -1,0 +1,71 @@
+<% meta_tag :description, "Listado de Cursos Disponibles en Sumemos Uno Mas" %>
+<section class="content-header">
+  <h1 style="visibility: hidden">Cursos</h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-home"></i>Inicio
+    </a></li>
+    <li class="active pull">Cursos</li>
+  </ol>
+</section>
+<section class="content">
+  <h2 style="color: #3c8dbc!important;">¡Conocé los distintos cursos disponibles!</h2>
+  <div class="col-md-12" style="margin: 0px 0 15px 0;">
+    <p class="text-muted text-center col-md-offset-1 col-md-10" align="justify" style="font-size: large;">
+      <b>¡Sumemos Uno Más</b> te da una oportunidad única para aprender de lo que vos quieras! Explorá los distintos
+      cursos que hay abiertos y fíjate si alguno te interesa
+    </p>
+  </div>
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <%= render :partial => 'filtrar_cursos' %>
+    </div>
+  </div>
+  <% if @cursos.any? %>
+      <div class="col-md-offset-2 col-md-8">
+        <div class="box box-primary">
+          <div class="box-header">
+            <h2>
+              <a data-toggle="collapse" style="text-decoration: none!important; font-size: x-large!important;" href="#collapse1">
+                <i class="fa fa-map-marker"></i>
+                ¿Querés ver en un mapa los cursos que hay cerca tuyo? ¡Hacé click acá!
+              </a>
+            </h2>
+          </div>
+          <div class="box-body">
+            <div id="collapse1" class="panel-collapse collapse">
+              <div class="column">
+                <div id="map-geo" class="map-content" style="; height: 300px; width: auto"></div>
+              </div>
+              <script async defer
+                      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdE3f3MTZwBgQRgG4V-urwsCf-GXiryXY&signed_in=true&libraries=places&callback=initMap">
+              </script>
+              <%= render :partial => 'locations/mapaCursosjs', :locals => {:cursos => @cursos}, 'data-no-turbolink' => false %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% @cursos.each do |curso| %>
+          <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-2">
+            <div class="info-box" style="background: <%= cycle('#27ae60','#2980b9','#e74c3c','#f39c12') %>; color: #fff;">
+              <div class="info-box-content" style="background: #fff !important; color: #555555; border: #0073B7 !important; font-size: 12px; margin-left:15px !important;">
+                <span class="info-box-number"><b><%= link_to curso.nombre, curso, style: 'color: #555555; font-size: 25px;', 'data-no-turbolink' => false %></b></span>
+                <%= render :partial => 'layouts/share_button.html', :locals => {:test => "Curso en Sumemos uno mas : "+curso.nombre, :url => "/cursos/"+curso.id.to_s } %>
+                <h5>
+                  <span class="fa fa-calendar" aria-hidden="true"></span><%= " " + curso.fecha_inicio.strftime("%d/%m/%Y") + " - " + curso.fecha_fin.strftime("%d/%m/%Y") %>
+                </h5>
+                <h5 align="justify">
+                  <%= truncate(curso.descripcion, :ommision => "...", :length => 150) %><%= link_to "(Ver más)", curso, 'data-no-turbolink' => false %></h5>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+
+      <% end %>
+  <% else %>
+      <h1>
+        <i class="fa fa-thumbs-down"></i>
+        Ups! En este momento no hay cursos abiertos
+      </h1>
+  <% end %>
+</section>

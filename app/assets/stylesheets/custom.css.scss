@@ -1,0 +1,255 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+/* mixins, variables, etc. */
+
+$gray-medium-light: #eaeaea;
+
+@mixin box_sizing {
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+}
+
+/* universal */
+
+html,body {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 auto;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.center {
+  text-align: center;
+  h1 {
+    margin-bottom: 10px;
+  }
+}
+
+/* typography */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.2em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: $gray-light;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+/* footer */
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid $gray-medium-light;
+  color: $gray-light;
+  a {
+    color: $gray;
+    &:hover {
+      color: $gray-darker;
+    }
+  }
+  small {
+    float: left;
+  }
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 15px;
+    }
+  }
+}
+
+/* sidebar */
+
+
+
+/* forms */
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
+}
+
+#error_explanation {
+  color: red;
+  ul {
+    color: red;
+    margin: 0 0 30px 0;
+  }
+}
+
+.field_with_errors {
+  @extend .has-error;
+  .form-control {
+    color: $state-danger-text;
+  }
+}
+.checkbox {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  span {
+    margin-left: 20px;
+    font-weight: normal;
+  }
+}
+
+#session_remember_me {
+  width: auto;
+  margin-left: 0;
+}
+
+.column_blue {
+  background-color: #44C8F5;
+  text-align: center;
+  height: 600px;
+  bottom: 0;
+  margin: 0;
+  font-family: "Agency FB", sans-serif;
+}
+
+.column_yellow {
+  background-color: yellow;
+  text-align: center;
+  height: 600px;
+  bottom: 0;
+  margin: 0;
+  font-family: "Agency FB", sans-serif;
+}
+
+.column_green {
+  background-color: lawngreen;
+  text-align: center;
+  height: 600px;
+  bottom: 0;
+  margin: 0;
+  font-family: "Agency FB", sans-serif;
+}
+
+.column_two {
+  background-color: palegreen;
+  text-align: center;
+  bottom: 0;
+  margin: 0;
+  font-family: "Agency FB", sans-serif;
+}
+
+.column_one {
+  //background-color: #00A65A;
+  background-color: mediumturquoise;
+  text-align: center;
+  bottom: 0;
+  margin: 0;
+  font-family: "Agency FB", sans-serif;
+}
+
+.column_three {
+  background-color: #FFEB3B;
+  text-align: center;
+  bottom: 0;
+  margin: 0;
+  font-family: "Agency FB", sans-serif;
+}
+
+#parent-hover:hover #only-when-hover {
+  display:block;
+  opacity: 10 ;
+}
+
+.a .parent-title {
+  color: black!important;
+}
+
+#parent-hover:hover #parent-title {
+  display:block;
+  color: black;
+}
+
+#only-when-hover{
+  display:none;
+}
+
+#linea-titulo{
+  width:85px;
+  height:3px;
+  background-color:#000;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:30px;
+}
+
+@media (min-width: 767px) {
+  .col-home {
+    width: 100% !important;
+    height: 33% !important;
+    float: left;
+  }
+}
+
+@font-face {
+  font-family: Mathlete-Bulky;
+  src:font-url('Mathlete-Bulky.otf');
+}
+
+.font-home{
+  color:black !important;
+  font-family: Mathlete-Bulky !important;
+  font-size: 66px;
+  text-decoration:none;
+}
+
+#sin-subrayar a:link, #sin-subrayar a:visited, #sin-subrayar a:hover, #sin-subrayar a:active  {
+  text-decoration:none;
+}
+
+.img-sombreado{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.font-reputacion{
+  color:black !important;
+  font-family: Mathlete-Bulky !important;
+  font-size: 36px!important;
+  text-decoration:none;
+  text-transform: none!important;
+}
+
+@media (min-width: 992px) and (max-width: 1300px) {
+  .font-reputacion {
+    font-size: 24px!important;
+  }
+}

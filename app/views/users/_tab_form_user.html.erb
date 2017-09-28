@@ -1,0 +1,106 @@
+<section class="content">
+  <div class="<%= view == 'edit' ? 'box box-primary col-md-10 col-md-offset-1' : '' %>">
+    <% if view == 'edit' %>
+        <h2 style="color: #3c8dbc!important;">¡Animate a personalizar tu perfil!</h2>
+        <div class="col-md-12" style="margin: 15px 0 30px 0;">
+          <p class="text-muted text-center col-md-offset-1 col-md-10" align="justify" style="font-size: large;">
+            ¡Queremos que nos cuentes un poco más sobre vos! No te olvides de ponerte una buena foto de perfil para que
+            te conozcan los miembros de <b>Sumemos Uno Más</b>
+          </p>
+        </div>
+    <% else %>
+        <h2 style="color: #3c8dbc!important;"><%= view == 'create_becado' ? '¡Seguí sumando a ' : '¡Sumate a ' %>
+          <b>Sumemos Uno Más!</b></h2>
+        <div class="col-md-12" style="margin: 5px 0 30px 0;">
+          <p class="text-muted text-center col-md-offset-1 col-md-10" align="justify" style="font-size: large;">
+            Por favor ingrese todos los datos <%= view == 'create_becado' ? 'del alumno que quiere sumar' : '' %>
+          </p>
+        </div>
+    <% end %>
+    <div class="form-horizontal col-md-offset-2">
+      <%= form_for @user, class: "form-horizontal", :html => {:multipart => true} do |f| %>
+          <%= render :partial => 'shared/error_messages', :locals => {:errors => @user.errors} %>
+          <div class="form-group has-feedback">
+            <%= f.label :name, "Nombre:", class: "control-label col-md-2" %>
+            <div class="col-md-8">
+              <%= f.text_field :name, class: 'form-control', placeholder: "Nombre" %>
+              <span class="fa fa-user form-control-feedback"></span>
+            </div>
+          </div>
+          <div class="form-group has-feedback">
+            <%= f.label :lastname, "Apellido:", class: "control-label col-md-2" %>
+            <div class="col-sm-8">
+              <%= f.text_field :lastname, class: 'form-control', placeholder: "Apellido" %>
+              <span class="fa fa-user form-control-feedback"></span>
+            </div>
+          </div>
+          <% if view == 'edit' %>
+              <div class="form-group">
+                <%= f.label :imagen, "Foto:", class: "control-label col-sm-2" %>
+                <div class="col-sm-6"><%= f.file_field :imagen %></div>
+              </div>
+              <div class="form-group has-feedback">
+                <%= f.label :experiencia, "Experiencia:", class: "control-label col-md-2", for: "inputExperience" %>
+                <div class="col-sm-8">
+                  <%= f.text_area :experiencia, class: 'form-control', placeholder: "Contá un poco sobre qué estudias o estudiaste", id: "inputExperience" %>
+                  <span class="fa fa-user form-control-feedback"></span>
+                </div>
+              </div>
+              <div class="form-group has-feedback">
+                <%= f.label :habilidades, "Habilidades:", class: "control-label col-md-2", for: "inputSkills" %>
+                <div class="col-sm-8">
+                  <%= f.text_area :habilidades, class: 'form-control', placeholder: "Cosas en lo que sos bueno! (separado por comas)", id: "inputSkills" %>
+                  <span class="fa fa-user form-control-feedback"></span>
+                </div>
+              </div>
+              <div class="form-group has-feedback">
+                <%= f.label :notas, "Notas:", class: "control-label col-md-2", for: "inputSkills" %>
+                <div class="col-sm-8">
+                  <%= f.text_area :notas, class: 'form-control', placeholder: "Contá algo sobre vos!", id: "inputSkills" %>
+                  <span class="fa fa-user form-control-feedback"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :location, "Ubicación:", class: "control-label col-sm-2" %>
+                <div class="col-sm-8">
+                  <%= fields_for :location do |location| %>
+                      <%= render :partial => 'locations/show', :locals => {:location => location, :location_value => @user.location} %>
+                  <% end %>
+                </div>
+              </div>
+          <% else %>
+              <div class="form-group has-feedback">
+                <%= f.label :email, "Mail:", class: "control-label col-sm-2" %>
+                <div class="col-sm-8"><%= f.email_field :email, class: 'form-control', placeholder: "Mail" %>
+                  <span class="fa fa-envelope form-control-feedback"></span></div>
+              </div>
+              <div class="form-group has-feedback">
+                <%= f.label :password, "Contraseña:", class: "control-label col-sm-2" %>
+                <div class="col-sm-8"><%= f.password_field :password, class: 'form-control', placeholder: "Contraseña" %>
+                  <span class="fa fa-lock form-control-feedback"></span>
+                </div>
+              </div>
+              <div class="form-group has-feedback">
+                <%= f.label :password_confirmation, "Repetir contraseña:", class: "control-label col-sm-2" %>
+                <div class="col-sm-8"><%= f.password_field :password_confirmation, class: 'form-control', placeholder: "Repetir contraseña" %>
+                  <span class="fa fa-sign-in form-control-feedback"></span>
+                </div>
+              </div>
+          <% end %>
+          <br>
+          <div class="form-group" style="margin-bottom: 15px; padding-bottom: 15px;">
+            <div style="margin: 15px!important;">
+              <%= f.submit btn_label, class: "btn btn-danger col-xs-offset-2 col-xs-10 col-md-offset-2 col-md-3", style:"margin: 15px!important;" %>
+            </div>
+            <% if view == 'edit' %>
+                <div>
+                  <%= link_to "Desactivar cuenta", @user, 'data-confirm' => "¿Seguro desea desactivar la cuenta?", class: "btn btn-primary col-md-4 col-xs-offset-2 col-xs-10 col-md-offset-2", :method => :delete, 'data-no-turbolink' => false, style:"margin: 15px!important;" %>
+                </div>
+            <% end %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+

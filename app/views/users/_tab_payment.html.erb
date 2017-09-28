@@ -1,0 +1,41 @@
+<div class="content-wrapper" style="margin-left: 0px!important; border-left: 0px!important;">
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <% @payment_type = PaymentType.where(:user_id =>  user.id).first %>
+        <% if @payment_type.present? %>
+            <ul class="timeline">
+              <li class="time-label">
+                  <span class="bg-green"> Mis Tipos de Pagos </span>
+              </li>
+              <li>
+                <i class="fa fa-dollar bg-aqua"></i>
+                <div class="timeline-item">
+                  <h3 class="timeline-header"><a><%= @payment_type.name %></a></h3>
+                  <h6 class="timeline-header-small"><i class="fa fa-calendar"> </i></h6>
+                  <div class="timeline-body"></div>
+                  <div class="timeline-footer">
+                    <%= link_to "Editar", edit_payment_type_path(@payment_type.id), class: "btn btn-danger btn-xs", 'data-no-turbolink' => false %>
+                  </div>
+                </div>
+              </li>
+              <li><i class="fa fa-clock-o bg-gray"></i></li>
+            </ul>
+        <% else %>
+            <h2 style="color: #3c8dbc!important;">¡Todavía no tiene asociada ninguna cuenta de Todo Pago!</h2>
+            <div class="col-md-12" style="margin: 15px 0 30px 0;">
+              <p class="text-muted text-center col-md-offset-1 col-md-10" align="justify" style="font-size: large;">
+                Contar con una cuenta en Todo Pago te sumará muchas ventajas. ¡Es fácil, animáte a crear una!
+              </p>
+            </div>
+            <div class="col-md-4 col-md-offset-4 col-sm-4 col-xs-6 col-xs-offset-3" style="margin-top: 50px;">
+              <%= link_to "Agregar tipo de Pago", new_payment_type_path, class: "btn btn-danger btn-block", 'data-no-turbolink' => false %>
+            </div>
+            </div>
+        <% end %>
+    </div>
+  </section>
+</div>
+
+
+

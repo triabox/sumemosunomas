@@ -1,0 +1,10 @@
+<%= render :partial => 'locations/map_google.html' , :locals => {  :location => location ,:location_value => location_value,:edit => 'true'}%>
+<div style="display: none;">
+
+	<%= location.label :city , "Ciudad" %>
+	<%= location.text_field :city, class: 'form-control',value:location_value.city %>
+	<%= location.label :latitude, "Latitud" %>
+	<%= location.text_field :latitude, class: 'form-control',value:location_value.latitude %>
+	<%= location.label :longitude, "Longitude" %>
+	<%= location.text_field :longitude, class: 'form-control',value:location_value.longitude %>
+</div>

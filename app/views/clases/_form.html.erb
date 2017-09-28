@@ -1,0 +1,118 @@
+<section class="content-header">
+  <h1 style="visibility: hidden;"><%= title %></h1>
+  <ol class="breadcrumb">
+    <% if view != 'edit' %>
+        <li><a href="/"><i class="fa fa-home"></i>Inicio</a></li>
+        <li class="active pull">Nueva Clase</li>
+    <% else %>
+        <li>
+          <%= link_to @clase.curso, 'data-no-turbolink' => false do %>
+              <i class="fa fa-pencil"></i>Curso <%= @clase.curso.nombre %>
+          <% end %>
+        </li>
+        <li class="active pull">Modificar clase</li>
+    <% end %>
+  </ol>
+</section>
+
+
+<section class="content">
+  <div class="box box-primary col-md-6 col-md-offset-3 col-xs-12">
+    <div class="box-body box-profile">
+      <div class="col-md-12">
+        <% if view != 'edit' %>
+            <h1 style="color: #3c8dbc!important;">¡No tengas miedo de editar tu clase!</h1>
+        <% else %>
+            <h1 style="color: #3c8dbc!important;">¡No tengas miedo de crear tu clase!</h1>
+        <% end %>
+        <p class="text-muted text-center col-md-offset-3 col-md-6" align="justify" style="font-size: large;">
+          Acordate de completar todos los campos, así es mas fácil conocer la clase que publicas
+        </p>
+      </div>
+      <div class="form-horizontal">
+        <%= form_for(@clase, class: "form-horizontal") do |f| %>
+            <% if @clase.errors.any? %>
+                <div id="error_explanation">
+                  <ul>
+                    <% @clase.errors.full_messages.each do |message| %>
+                        <% flash[:error] = message %>
+                    <% end %>
+                  </ul>
+                </div>
+            <% end %>
+            <div class="form-group has-feedback">
+              <%= f.label :nombre, "Nombre:", class: "control-label col-sm-2" %>
+              <div class="col-sm-10">
+                <%= f.text_field :nombre, class: 'form-control', placeholder: "Nombre" %>
+                <i class="fa fa-bookmark form-control-feedback" aria-hidden="true"></i>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback">
+              <%= f.label :descripcion, "Descripción:", class: "control-label col-sm-2" %>
+              <div class="col-sm-10">
+                <%= f.text_area :descripcion, class: 'form-control',
+                                placeholder: "Breve descripción de la clase" %>
+                <i class="fa fa-bars form-control-feedback" aria-hidden="true"></i>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback">
+              <%= f.label :contenido, "Contenido:", class: "control-label col-sm-2" %>
+              <div class="col-sm-10">
+                <%= f.text_area :contenido, class: 'form-control',
+                                placeholder: "Temas que se verán en la clase" %>
+                <i class="fa fa-list-ul form-control-feedback" aria-hidden="true"></i>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback">
+              <%= f.label :fecha, "Día:", class: "control-label col-sm-2" %>
+              <div class='col-sm-10'>
+                <div class="form-group">
+                  <div class='input-group date' id='datetimepicker1' style="margin-left: 14px; margin-right: 14px">
+                             <span class="input-group-addon" id="calendar">
+                              <span class="fa fa-calendar" aria-hidden="true"></span>
+                          </span>
+                    <div onclick="opendatetimepicker('calendar')">
+                      <%= f.text_field :fecha, :input_html => {:id => "datetimepicker"}, :value => (@clase.fecha.blank? ? '' : @clase.fecha.strftime('%d/%m/%Y')),
+                                       placeholder: "Día en que se realizará la clase", class: 'form-control' %></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback">
+              <%= f.label :hora_inicio, "Hora inicio:", class: "control-label col-sm-2" %>
+              <div class="col-sm-10">
+                <%= f.text_field :hora_inicio, class: 'form-control', placeholder: "Horario en que iniciará la clase (hh:mm)" %>
+                <i class="fa fa-clock form-control-feedback" aria-hidden="true"></i>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback">
+              <%= f.label :hora_fin, "Hora fin:", class: "control-label col-sm-2" %>
+              <div class="col-sm-10">
+                <%= f.text_field :hora_fin, class: 'form-control', placeholder: "Horario en que iniciará la clase (hh:mm)" %>
+                <i class="fa fa-clock form-control-feedback" aria-hidden="true"></i>
+              </div>
+            </div>
+            <%= f.hidden_field :curso_id, :value => @clase.curso_id %>
+
+            <div class="col-sm-offset-2 col-sm-4">
+              <%= f.submit btn_label, class: "btn btn-danger" %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,142 @@
+<section class="content-header">
+  <h1 style="visibility: hidden"><%= title %></h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-home"></i>Inicio
+    </a></li>
+    <% if view == 'edit' %>
+        <li><%= link_to @curso, 'data-no-turbolink' => false do %><i class="fa fa-pencil"></i> Curso <%= @curso.nombre %>
+          <% end %></li>
+    <% end %>
+    <li class="active"><%= title %></li>
+  </ol>
+</section>
+<% if view != 'edit' %>
+    <h2 style="color: #3c8dbc!important;">¡Animate a crear un nuevo curso!</h2>
+    <div class="col-md-12" style="margin: 5px 0 15px 0;">
+      <p class="text-muted text-center col-md-offset-1 col-md-10" align="justify" style="font-size: large;">
+        ¡No tengas miedo de enseñar! Para <b>Sumemos Uno Más</b> es una alegría que te sumes
+        a nuestro equipo de profesores
+      </p>
+    </div>
+<% end %>
+<section class="content">
+  <%= form_for @curso, :html => {:multipart => true} do |f| %>
+      <% if @curso.errors.any? %>
+          <div id="error_explanation">
+            <ul>
+              <% @curso.errors.full_messages.each do |message| %>
+                  <% flash[:error] = message + @curso.to_json %>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8 col-xs-12" style=" overflow: visible !important;">
+          <div class="wizard">
+            <div class="wizard-inner">
+              <div class="connecting-line"></div>
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                  <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Descripción">
+                              <span class="round-tab">
+                              <i class="fa fa-pencil"></i>
+                              </span>
+                  </a>
+                </li>
+                <li role="presentation" class="disabled">
+                  <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Cupos">
+                    <span class="round-tab">
+                    <i class="fa fa-users">
+                    </i>
+                    </span>
+                  </a>
+                </li>
+                <li role="presentation" class="disabled">
+                  <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Duración-Ubicación">
+                                  <span class="round-tab">
+                                  <i class="fa fa-bookmark"></i>
+                                  </span>
+                  </a>
+                </li>
+                <% if view == 'new' %>
+                    <li role="presentation" class="disabled">
+                      <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab" title="Horarios">
+                          <span class="round-tab">
+                          <i class="fa fa-calendar"></i>
+                          </span>
+                      </a>
+                    </li>
+                <% end %>
+                <li role="presentation" class="disabled">
+                  <a href="#step5" data-toggle="tab" aria-controls="step5" role="tab" title="Forma de pago">
+                        <span class="round-tab">
+                        <i class="fa fa-credit-card-alt"></i>
+                        </span>
+                  </a>
+                </li>
+                <% if view == 'edit' %>
+                    <li role="presentation" class="disabled">
+                      <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Fin">
+                          <span class="round-tab">
+                          <i class="fa fa-calendar fa-lg"></i>
+                          </span>
+                      </a>
+                    </li>
+                <% end %>
+              </ul>
+            </div>
+            <form role="form">
+              <div class="tab-content">
+                <div class="tab-pane active" role="tabpanel" id="step1">
+                  <%= render :partial => 'step_1', :locals => {:f => f} %>
+                </div>
+
+                <div class="tab-pane" role="tabpanel" id="step2">
+                  <%= render :partial => 'step_2', :locals => {:f => f, :view => view} %>
+                </div>
+
+                <div class="tab-pane" role="tabpanel" id="step3">
+                  <%= render :partial => 'step_3', :locals => {:f => f, :view => view} %>
+                </div>
+
+                <% if view == 'new' %>
+                    <div class="tab-pane" role="tabpanel" id="step4">
+                      <%= render :partial => 'step_4_horarios', :locals => {:f => f} %>
+                    </div>
+                <% end %>
+                <div class="tab-pane" role="tabpanel" id="step5">
+                  <%= render :partial => 'step_5_pagos', :locals => {:f => f,:user => current_user, :view => view, :btn_label => btn_label} %>
+                </div>
+
+                <% if view == 'edit' %>
+                    <div class="tab-pane" role="tabpanel" id="complete">
+                      <div class="col-md-10 col-md-offset-1">
+                        <br>
+                        <div class="col-md-10 col-md-offset-1">
+                          <h3>Editá y personalizá tus clases</h3>
+                          <br>
+                          <div>
+                            <%= render :partial => 'clases/tabla_clases', :locals => {:curso => @curso, :view => 'edit'} %>
+                          </div>
+                        </div>
+                        <!-- /.box-body -->
+                      </div>
+                      <div class="form-group">
+                        <div>
+                          <button type="button" class="btn btn-primary prev-step col-xs-3 col-xs-offset-2" style="margin-top:15px;">Anterior</button>
+                        </div>
+                        <div>
+                          <%= f.submit btn_label, class: "btn btn-danger col-xs-3 col-xs-offset-2", style: 'margin:15px; margin-right: 20px;' %>
+                        </div>
+                      </div>
+                    </div>
+                <% end %>
+
+                <div class="clearfix"></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</section>

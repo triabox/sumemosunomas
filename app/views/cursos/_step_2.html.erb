@@ -1,0 +1,35 @@
+<h2 style="color: #3c8dbc!important; font-size: large !important; margin-top: 0px!important;"><b>¿Cuántos alumnos podrán
+  asistir al curso?</b></h2>
+<div class="col-md-12" style="margin-bottom: 20px;">
+  <h5 class="text-muted text-center col-md-offset-1 col-md-10" align="justify">
+    <b>En Sumemos Uno Mas buscamos que todos participen y colaboren brindando cupos gratuitos. Animate!</b>
+  </h5>
+</div>
+<div class="form-horizontal">
+  <div class="form-group has-feedback">
+    <%= f.label :cupos, "Capacidad:", class: "control-label col-md-2" %>
+    <div class="col-md-9 col-xs-12">
+      <%= f.number_field :cupos, class: 'form-control',
+                         placeholder: "Cantidad de alumnos por curso", :readonly => (view == 'edit') %>
+
+      <i class="fa fa-users form-control-feedback" aria-hidden="true"></i>
+    </div>
+  </div>
+  <br>
+  <div class="form-group has-feedback">
+    <%= f.label :relacion_b_nb, "Becados:", class: "control-label col-md-2" %>
+    <div class="col-md-9 col-xs-12">
+      <%= f.number_field :relacion_b_nb, class: 'form-control',
+                         placeholder: "Cantidad de alumnos becados por curso" , :readonly => (view == 'edit') %>
+      <i class="fa fa-user-plus form-control-feedback" aria-hidden="true"></i>
+    </div>
+  </div>
+  <div class="form-group">
+    <div>
+      <button type="button" class="btn btn-primary prev-step col-xs-3 col-xs-offset-3" style="margin-top:15px;;">Anterior</button>
+    </div>
+    <div>
+      <button type="button" class="btn btn-danger two-next-step col-xs-3 col-xs-offset-1" style="margin-top:15px;">Siguiente</button>
+    </div>
+  </div>
+</div>

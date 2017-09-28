@@ -1,0 +1,40 @@
+<div class="form-horizontal">
+  <div class="form-group has-feedback margin-small">
+    <%= f.label :nombre, "Nombre:", class: "control-label col-md-2" %>
+    <div class="col-md-9 col-xs-12">
+      <%= f.text_field :nombre, class: 'form-control', placeholder: "Nombre" %>
+      <i class="fa fa-bookmark form-control-feedback " aria-hidden="true"></i>
+    </div>
+  </div>
+
+  <div class="form-group has-feedback margin-small">
+    <%= f.label :descripcion, "Descripción:", class: "control-label col-md-2" %>
+    <div class="col-md-9">
+      <%= f.text_area :descripcion, class: 'form-control',
+                      placeholder: "Breve descripción del curso" %>
+      <i class="fa fa-bars form-control-feedback" aria-hidden="true"></i>
+    </div>
+  </div>
+
+  <div class="form-group has-feedback margin-small" id="tab1">
+    <%= f.label :contenido, "Contenido:", class: "control-label col-md-2" %>
+    <div class="col-md-9">
+      <%= f.text_area :contenido, class: 'form-control',
+                      placeholder: "Temas que se verán en el curso" %>
+      <i class="fa fa-list-ul form-control-feedback" aria-hidden="true"></i>
+    </div>
+  </div>
+
+  <div class="form-group has-feedback margin-small" id="tab1">
+    <%= f.label :tipo_actividad, "Tipo de actividad:", class: "control-label col-md-2" %>
+    <div class="col-md-9 col-xs-12">
+      <%= f.text_field :tipo_actividad, class: 'form-control', placeholder: "Tipo de actividad" %>
+      <i class="fa fa-flag form-control-feedback " aria-hidden="true"></i>
+    </div>
+  </div>
+  <div class="form-group">
+    <div>
+      <button type="button" class="btn btn-danger one-next-step col-xs-offset-4 col-xs-4" style="margin-top: 15px;">Siguiente</button>
+    </div>
+  </div>
+</div>

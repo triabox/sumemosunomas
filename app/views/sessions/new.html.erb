@@ -1,0 +1,59 @@
+<% provide(:title, "Iniciar Sesión") %>
+<section class="content-header">
+  <h1 style="visibility: hidden;">  <i>Iniciar Sesión</i></h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-home"></i>Inicio</a></li>
+    <li class="active">Iniciar Sesión</li>
+  </ol>
+</section>
+<section class="content">
+    <div class="row">
+      <div class="col-md-12 col-lg-12">
+        <div class="box box-primary col-md-6 col-md-offset-3 col-xs-12">
+          <div class="box-body box-profile">
+            <h1>Iniciar Sesión</h1>
+            <br>
+            <div class="form-horizontal">
+              <%= form_for(:session, class: "form-horizontal", url: login_path) do |f| %>
+                  <div class="form-group has-feedback">
+                    <%= f.label :email, "Correo Electrónico", class: "control-label col-sm-2" %>
+                    <div class="col-sm-10">
+                      <%= f.email_field :email, class: 'form-control', placeholder: "Correo Electrónico" %>
+                      <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                  </div>
+                  <div class="form-group has-feedback">
+                    <%= f.label :password, "Contraseña", class: "control-label col-sm-2" %>
+                    <div class="col-sm-10">
+                      <%= f.password_field :password, class: 'form-control', placeholder:"Contraseña" %>
+                      <%= link_to "(Olvidé mi contraseña)", new_password_reset_path, 'data-no-turbolink' => false %>
+                      <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                    <%= f.label :remember_me, class: "checkbox inline" do %>
+                        <%= f.check_box :remember_me %>
+                        <span>Recordarme en esta computadora</span>
+                    <% end %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <br>
+                    <div class="col-sm-offset-2 col-sm-4">
+                      <%= f.submit "Iniciar Sesión", class: "btn btn-danger" %>
+                    </div>
+                  </div>
+              <% end %>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-6">
+                  <label class="control-label">Usuario nuevo? <%= link_to "Registrarse ahora!", signup_path, 'data-no-turbolink' => false %></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

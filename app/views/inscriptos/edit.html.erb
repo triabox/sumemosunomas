@@ -1,0 +1,75 @@
+<section class="content-header">
+  <h1 style="visibility: hidden;">Pagar Inscripción</h1>
+  <ol class="breadcrumb">
+    <li><%= link_to @curso, 'data-no-turbolink' => false do %><i class="fa fa-pencil"></i> Curso <%= @curso.nombre %>
+      <% end %></li>
+    <li class="active">Pagar Inscripción</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-12 col-lg-12">
+      <div class="box box-primary col-md-6 col-md-offset-3 col-xs-12">
+        <div class="box-body box-profile">
+          <h1 class="color-blue">¡Paga tu inscripción a <%= @curso.nombre %>!</h1>
+          <br>
+          <div class="info-box bg-green">
+            <span class="info-box-icon"><i class="fa fa-graduation-cap"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-number"><%= @curso.nombre %></span>
+              <br>
+              <span class="progress-description">
+                <strong>Precio del Curso:</strong>
+                $<%= @curso.redondear_monto %>
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <br>
+          <% if @curso.monto != 0 %>
+              <h4><strong>¿Cómo preferís pagarlo?</strong></h4>
+              <% if @curso.efectivo %>
+                  <div class="row">
+                    <div class="radio col-md-4 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                      <i class="fa fa-dollar"></i>
+                      <label class="control-label">
+                        <input name="Pago" id="curso_efectivo" type="radio" class="radio" onclick="mostrarTipoPagoEnInscripcion()">
+                        Efectivo
+                      </label>
+                    </div>
+                  </div>
+              <% end %>
+              <% if @curso.tarjeta %>
+                  <div class="row">
+                    <div class="radio col-md-4 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                      <i class="fa fa-credit-card"></i>
+                      <label class="control-label">
+                        <input name="Pago" id="curso_tarjeta" type="radio" class="radio" onclick="mostrarTipoPagoEnInscripcion()">
+                        Tarjeta de crédito
+                      </label>
+                    </div>
+                  </div>
+              <% end %>
+              <div id="pago_tarjeta" style="display: none;">
+                <% if tiene_cuenta_en_todo_pago %>
+                    <%= render :partial => 'payment_types/show', :locals => {:tipoDePago => findPaymentTypeDe(current_user)} %>
+                <% else %>
+                    <h3>Completa los datos de tu cuenta:</h3>
+                    <br>
+                    <%= fields_for :user do |user| %>
+                        <%= render :partial => 'payment_types/configuracion_pago', :locals => {:user => current_user, :f => user} %>
+                    <% end %>
+                <% end %>
+              </div>
+              <div id="pago_efectivo_boton" class="col-sm-4" style="display: none;">
+                <%= link_to "Pagar con efectivo", cambia_pago_a_efectivo_path(:user_id => current_user, :curso_id => @curso.id), class: "btn btn-danger" %>
+              </div>
+              <div id="pago_tarjeta_boton" class="col-sm-4" style="display: none;">
+                <%= link_to "Pagar con tarjeta", paga_con_tarjeta_path(:user_id => current_user, :curso_id => @curso.id), class: "btn btn-danger" %>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

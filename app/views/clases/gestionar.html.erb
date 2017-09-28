@@ -1,0 +1,75 @@
+<section class="content-header">
+  <h1 style="visibility: hidden;">Administrar</h1>
+  <ol class="breadcrumb">
+    <li><%= link_to @clase.curso, 'data-no-turbolink' => false do %>
+          <i class="fa fa-pencil"></i>Clase <%= @clase.curso.nombre %>
+      <% end %></li>
+    <li class="active pull">Administrar clase</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <% if @inscripciones.any? %>
+        <div class="col-md-12" style="margin: 0px 0 15px 0;">
+          <h2 style="color: #3c8dbc!important;">¡Administrá tu clase!</h2>
+          <p class="text-muted text-center col-md-offset-1 col-md-10" align="justify" style="font-size: large;">
+            Acordate que una vez que finalizó la clase es importante que tomes asistencia de todos los alumnos
+          </p>
+        </div>
+        <div class="col-md-12 col-lg-12 col-xs-12">
+          <div class="box box-primary col-md-8 col-md-offset-2 col-xs-12">
+            <div class="box-body box-profile">
+              <%= form_for :clase, :url => tomar_asistencia_path, :html => {:method => :put}, class: "form-horizontal -align-left" do |f| %>
+                  <div class="box-body no-padding">
+                    <table class="table table-responsive">
+                      <th>Foto</th>
+                      <th>Nombre y Apellido</th>
+                      <th>Presencia</th>
+                      <% @inscripciones.each do |inscripto| %>
+                          <tr>
+                            <td>
+                              <img src="<%= usuarioDe(inscripto).user_image %>" class="profile-user-img img-responsive img-circle img-md" alt="User Image">
+                            </td>
+                            <td>
+                              <h5>
+                                <%= usuarioDe(inscripto).nameAndLastname %>
+                              </h5>
+                            </td>
+                            <td>
+                              <%= fields_for 'inscripto[]', inscripto do |insc_fields| %>
+                                  <%= insc_fields.check_box :presencia, align: "left", style: "text-align: left" %>
+                              <% end %>
+                            </td>
+                          </tr>
+                      <% end %>
+                    </table>
+                  </div>
+                  <br>
+                  <div class="form-group col-md-3 col-sm-4 col-xs-4">
+                    <div class="pull-left">
+                      <%= submit_tag 'Tomar Asistencia', class: 'btn btn-danger' %>
+                    </div>
+                  </div>
+              <% end %>
+
+            </div>
+          </div>
+        </div>
+    <% else %>
+        <h1>
+          <i class="fa fa-thumbs-down"></i>
+          Ups! Todavía no hay alumnos inscriptos a la clase
+        </h1>
+    <% end %>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+

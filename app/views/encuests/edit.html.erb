@@ -1,0 +1,76 @@
+<section class="content-header">
+  <h1>Encuestas</h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-home"></i>Inicio
+    </a></li>
+    <li class="active pull">Realizar Encuestas</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <%= form_for :encuest, :url => completar_encuesta_path, :html => {:method => :put} do |f| %>
+        <div class="col-md-12 col-lg-12">
+          <% if @mis_encuestas.any? %>
+              <% @mis_encuestas.each do |encuesta| %>
+                  <%= fields_for 'encuesta[]', encuesta do |enc_fields| %>
+                      <div class="box box-primary col-md-8 col-sm-12 col-xs-12 col-md-offset-2">
+                        <div class="box-body box-profile">
+                          <div class="row">
+                            <div class="col-md-2 col-xs-12 no-padding">
+                              <img src="
+                                <% if encuesta.encuestado.imagen.present? %><%= encuesta.encuestado.imagen %>
+                                      <% else %><%= "/avatar2.jpg" %>
+                                <% end %>" class="profile-user-img img-responsive without-border " alt="User Image">
+                              <br>
+                              <h4 align="center"><strong><%= encuesta.encuestado.nameAndLastname %></strong></h4>
+                              <br><br><br><br><br>
+                              <%= f.check_box :recomendado, style: 'visibility: hidden;' %>
+                              <% if !es_profesor_de(encuesta.curso) %>
+                                  <h5 align="center">Lo recomiendo? </h5>
+                                  <div align="center">
+                                    <%= f.label :recomendado, :class => 'checkbox' do %>
+                                        <%= f.check_box :recomendado %>
+                                        <i class="fa fa-thumbs-o-up fa-2x"></i>
+                                    <% end %>
+                                  </div>
+                              <% end %>
+
+                              <h5 align="center">Puntuación General:
+                                <%= enc_fields.number_field :puntuacion, class: 'rating stars',
+                                                            'data-min' => '1', 'data-max' => '5' %>
+                              </h5>
+                            </div>
+                            <div class="col-md-10 col-xs-12">
+                              <ul class="list-group list-group-unbordered">
+                                <% encuesta.cuestionarios.each_with_index do |cuestionario, index| %>
+                                    <%= fields_for 'cuestionario[]', cuestionario do |preg_fields| %>
+                                        <li class="list-group-item">
+                                          <%= (index + 1).to_s + ". " + cuestionario.pregunta %>
+                                          <%= preg_fields.number_field :cantEstrellas, class: 'rating stars pull-right',
+                                                                       'data-min' => '1', 'data-max' => '5' %>
+
+                                          <%= preg_fields.text_field(:respuesta,
+                                                                     placeholder: 'Agregue un comentario al respecto (opcional)') %>
+                                        </li>
+                                    <% end %>
+                                <% end %>
+                              </ul>
+
+                            </div>
+                            <%= enc_fields.text_area :comentario, placeholder: "Escribe una opinión general aqui", size: "15x5" %>
+                          </div>
+                        </div>
+                      </div>
+                  <% end %>
+              <% end %>
+              </div>
+              <!-- /.col -->
+              <%= submit_tag 'Enviar Encuesta', class: 'btn btn-success col-md-2 col-md-offset-5' %>
+          <% end %>
+    <% end %>
+  </div>
+  <!-- /.row -->
+</section>
+
+
+

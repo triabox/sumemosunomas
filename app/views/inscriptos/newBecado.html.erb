@@ -1,0 +1,61 @@
+<section class="content-header">
+  <h1 style="visibility: hidden;"><i>Inscripcion</i></h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-pencil"></i>Curso <%= @curso.nombre %></a></li>
+    <li class="active">Inscripcion</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-12 col-lg-12">
+      <div class="box box-primary col-md-6 col-md-offset-3 col-xs-12">
+        <div class="box-body box-profile">
+          <div class="form-horizontal">
+            <%= form_for(@inscripto) do |f| %>
+                <% if @inscripto.errors.any? %>
+                    <div id="error_explanation">
+                      <h2><%= pluralize(@inscripto.errors.count, "error") %> no dejan completar la inscripción:</h2>
+                      <ul>
+                        <% @inscripto.errors.full_messages.each do |message| %>
+                            <li><%= message %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                <% end %>
+                <h2 style="color: #3c8dbc!important;">¡Confirma la inscripción de un alumno!</h2>
+                <div class="col-md-12" style="margin: 15px 0 30px 0;">
+                  <p class="text-muted text-center col-md-offset-1 col-md-10" align="justify" style="font-size: large;">
+                    ¡Gracias por seguir sumando a que más chicos puedan aprender! Elegí alguno de los alumnos que hayas
+                    apadrinado
+                    e inscribilo
+                  </p>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-5">
+                    <strong>Nombre del Curso:</strong>
+                    <medium><%= @curso.nombre %></medium>
+                    <%= hidden_field_tag(:curso_id, @curso.id) %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-5">
+                    <strong>Seleccioná alumno para inscribir:</strong>
+                  </div>
+                  <div class="dropdown col-md-10">
+                    <%= collection_select(:becado, :id, @alumnosDeMiFundacion, :becado_id, :name, {disabled: -> (alumno) { no_puedo_inscribirlo_a(@curso, alumno) }}, {class: "form-control"}) %>
+                  </div>
+                </div>
+                <div class="form-group col-md-offset-2" style="margin-top: 50px!important;">
+                  <div class="actions col-md-3">
+                    <%= f.submit "Inscribir alumno", class: "btn btn-danger" %>
+                  </div>
+                </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+

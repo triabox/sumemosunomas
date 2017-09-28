@@ -1,0 +1,91 @@
+<section class="content-wrapper" style="margin-left: 0px!important; border-left: 0px!important;">
+  <section class="content">
+    <!-- row -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4 col-sm-12 col-xs-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-red"><i class="fa fa-pencil"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text font-reputacion">Cursos Creados</span>
+                <span class="info-box-number font-reputacion" style="font-size: 20px!important;"><%= @user.reputacion.SUM_CursosCreados %></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-green"><i class="fa fa-graduation-cap"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text font-reputacion">Cursos Inscriptos</span>
+                <span class="info-box-number font-reputacion" style="font-size: 20px!important;"><%= @user.reputacion.SUM_CursosInscriptos %></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-aqua"><i class="fa fa-thumbs-up"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text font-reputacion">Asistencia a clases</span>
+                <span class="info-box-number font-reputacion" style="font-size: 20px!important;">
+                  <%= @user.reputacion.PCT_AsistenciaAClases.floor %>
+                  %</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.row -->
+      <div class="col-md-12">
+        <div class="box box-primary">
+          <div class="box-body box-profile">
+            <ul class="list-group list-group-unbordered">
+              <li class="list-group-item">
+                <b>Reputación como profesor</b> <a class="pull-right">
+                <% @user.reputacion.AVG_ReputacionProfesor.times do %>
+                    <i class="fa fa-star stars pull-right" data-no-turbolink="false"></i>
+                <% end %>
+              </a>
+              </li>
+              <li class="list-group-item">
+                <b>Reputación como alumno</b> <a class="pull-right">
+                <% @user.reputacion.AVG_ReputacionAlumno.times do %>
+                    <i class="fa fa-star stars pull-right" data-no-turbolink="false"></i>
+                <% end %>
+              </a>
+              </li>
+              <li class="list-group-item">
+                <b>Recomendado como profesor</b> <a class="pull-right">
+                <span><%= @user.reputacion.SUM_ProfesorRecomendado %></span>
+                <span class="fa fa-thumbs-up"></span>
+              </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Post -->
+        <% if @user.get_encuestas.any? %>
+            <% @user.get_encuestas.each do |encuesta| %>
+                <% unless encuesta.comentario.blank? %>
+                    <div class="box box-primary">
+                      <div class="box-body box-profile">
+                        <div class="post clearfix">
+                          <div class="user-block">
+                            <span class="username">
+                              <a href="#"><%= encuesta.encuestador.nameAndLastname %></a>
+                            </span>
+                            <span class="description">comento sobre este usuario: </span>
+                          </div>
+                          <p><%= encuesta.comentario %></p>
+                        </div>
+                      </div>
+                    </div>
+                <% end %>
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+
+  </section>
+</section>

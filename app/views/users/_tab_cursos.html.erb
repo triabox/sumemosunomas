@@ -1,0 +1,64 @@
+<section class="content-wrapper" style="margin-left: 0px!important; border-left: 0px!important;">
+  <!-- Main content -->
+  <section class="content">
+    <!-- row -->
+    <div class="row">
+      <div class="col-md-12">
+        <% if @user.cursos_creados.any? %>
+            <!-- The time line -->
+            <ul class="timeline">
+              <li class="time-label">
+                  <span class="bg-green">
+                    Año 2016  <!-- TODO: hacer que segun el año me vaya agregando uno de estos -->
+                  </span>
+              </li>
+              <% @cursos_creados.each do |curso| %>
+                  <!-- timeline item -->
+                  <li>
+                    <i class="fa fa-user bg-aqua"></i> <!-- TODO que sea un icono segun categoria?? si es deporte una pelota, si es matematica un libro, etc -->
+                    <div class="timeline-item">
+                        <span class="time"><i class="fa fa-calendar"></i>
+                          <%= curso.fecha_inicio.strftime("%d/%m/%Y") + " - " + curso.fecha_fin.strftime("%d/%m/%Y") %></span>
+                      <h3 class="timeline-header">
+                        <a><%= link_to curso.nombre, curso, 'data-no-turbolink' => false %></a></h3>
+                      <div class="timeline-body">
+                        <strong><%= truncate(curso.descripcion, :ommision => "...", :length => 200) %></strong><br>
+                        <%= truncate(curso.contenido, :ommision => "...", :length => 200) %>
+                      </div>
+                      <div class="timeline-footer">
+                        <h6><%= "Lugares disponibles: " + curso.cupos.to_s %></h6>
+                        <h6><i class="fa fa-map-marker"></i> <%= curso.location.address %></h6>
+                      </div>
+                    </div>
+                  </li>
+              <% end %>
+              <!-- END timeline item -->
+              <li>
+                <i class="fa fa-clock-o bg-gray"></i>
+              </li>
+            </ul>
+        <% else %>
+            <div class="col-md-8 col-md-offset-2">
+              <% if @user == current_user %>
+                  <h3 align="center" style="margin-top: 50px!important; line-height: 200%">
+                    <i class="fa fa-pencil"></i>
+                    Todavía no has creado ningún curso.<br>
+                    ¡Animate a enseñar
+                    con <%= link_to "Sumemos Uno Más!", que_es_path, 'data-no-turbolink' => 'false' %>
+                    <br>
+                    ¡Crea un <%= link_to "nuevo curso", new_curso_path, 'data-no-turbolink' => 'false' %> hoy mismo!
+                  </h3>
+              <% else %>
+                  <h3 align="center" style="margin-top: 50px!important; line-height: 200%">
+                    <i class="fa fa-bullhorn"></i>
+                    <%= @user.nameAndLastname %> todavía no ha creado ningún curso.<br>
+                  </h3>
+              <% end %>
+            </div>
+        <% end %>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+</section>

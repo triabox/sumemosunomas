@@ -1,0 +1,274 @@
+<header class="main-header">
+  <a href="/" class="logo <%= controller_name == "static_pages" ? 'logo-home' : '' %>">
+    <!-- mini logo for sidebar mini 50x50 pixels -->
+    <span class="logo-mini <%= controller_name == "static_pages" ? 'logo-home' : '' %>">
+      <b>SU</b>+</span>
+    <!-- logo for regular state and mobile devices -->
+    <span class="logo-lg <%= controller_name == "static_pages" ? 'logo-home' : '' %>">Sumemos Uno <b>Más</b></span>
+  </a>
+  <nav class="navbar navbar-static-top <%= controller_name == "static_pages" ? 'home-nav-bar' : '' %>">
+    <a href="#" class="sidebar-toggle <%= controller_name == "static_pages" ? 'hamburger-button' : '' %>" data-toggle="control-sidebar" role="button">
+    </a>
+    <!-- Navbar Right Menu -->
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <% if logged_in? %>
+            <!-- Messages: style can be found in dropdown.less-->
+            <li class="dropdown messages-menu">
+              <!-- Menu toggle button -->
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-envelope-o"></i>
+                <% if cantMensajesNoLeidos > 0 %>
+                    <span class="label label-success"><%= cantMensajesNoLeidos %></span>
+                <% end %>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="header">Mensajes Nuevos</li>
+                <li>
+                  <!-- inner menu: contains the messages -->
+                  <ul class="menu">
+                    <% mensajesNoLeidos.each do |message| %>
+                        <li><!-- start message -->
+                          <%= link_to view_conversation_path(message.sender_user.id), 'data-no-turbolink' => false do %>
+                              <div class="pull-left">
+                                <!-- User Image -->
+                                <img src="<%= message.sender_user.user_image %>" class="img-circle">
+                              </div>
+                              <!-- Message title and timestamp -->
+                              <small style="color: black !important;" class="pull-right tiempo-mensaje">
+                                <i class="fa fa-clock-o"></i>
+                                <%= message.created_at.strftime("%d/%m/%Y") %>
+                              </small>
+                              <h4>
+                                <div style="white-space: normal !important; word-wrap:break-word !important; overflow-wrap: break-word !important;
+                                    word-wrap: break-word !important;">
+                                  <%= message.sender_user.nameAndLastname %>
+                                </div>
+                              </h4>
+                              <!-- The message -->
+                              <p><%= truncate(message.text, :ommision => "...", :length => 30) %></p>
+                          <% end %>
+                        </li>
+                    <% end %>
+                    <!-- end message -->
+                  </ul>
+                  <!-- /.menu -->
+                </li>
+                <li class="footer"><%= link_to messages_index_path, 'data-no-turbolink' => false do %>Ver todos los
+                      mensajes
+                  <% end %></li>
+              </ul>
+            </li>
+            <!-- /.messages-menu -->
+            <!-- Notifications Menu -->
+            <li class="dropdown notifications-menu">
+              <!-- Menu toggle button -->
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bell-o"></i>
+                <% if cantNotificacionesNoLeidas > 0 %>
+                    <span class="label label-warning"><%= cantNotificacionesNoLeidas %></span>
+                <% end %>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="header">Notificaciones</li>
+                <li>
+                  <!-- Inner Menu: contains the notifications -->
+                  <ul class="menu">
+                    <% @notificaciones.each do |notificacion| %>
+                        <li style="margin:5px"><!-- start notification -->
+                          <span class="fa fa-bell">
+                      <%= link_to notificacion.mensaje, ver_notificacion_path(notificacion), style: "color:black; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; line-height:20px;" %></span>
+                        </li>
+                        <!-- end notification -->
+                    <% end %>
+                  </ul>
+                </li>
+                <li class="footer"><a><%= link_to notifications_path, 'data-no-turbolink' => false do %>Ver todas las
+                      notificaciones
+                  <% end %></a></li>
+              </ul>
+            </li>
+            <!-- /.notifications Menu -->
+
+            <!-- User Account Menu -->
+            <li class="dropdown user user-menu">
+              <!-- Menu Toggle Button -->
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <!-- The user image in the navbar-->
+                <img src="
+                    <%= current_user.user_image %>
+                                " class="user-image" alt="User Image">
+                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                <span class="hidden-xs">
+                        <%= current_user.nameAndLastname %>
+                    </span>
+              </a>
+              <ul class="dropdown-menu">
+                <!-- The user image in the menu -->
+                <li class="user-header">
+                  <img src="<%= current_user.user_image %>" class="img-circle" alt="User Image">
+                  <p>
+                    <%= current_user.nameAndLastname %>
+                    <small><%= current_user.email %></small>
+                  </p>
+                </li>
+                <li class="user-body">
+                  <div class="row">
+                    <% if can? :manage, :all %>
+                        <div class="col-xs-12 text-center pull-left" id="sin-subrayar">
+                          <%= link_to "Crear Fundación", signup_path, style: 'color: #3c8dbc!important;', 'data-no-turbolink' => false %>
+                        </div>
+                        <div class="col-xs-12 text-center pull-right" id="sin-subrayar">
+                          <%= link_to "Listar Fundaciones", foundation_path, style: 'color: #3c8dbc!important;', 'data-no-turbolink' => false %>
+                        </div>
+                    <% end %>
+                    <% if soy_fundacion %>
+                        <div class="col-xs-12 text-center pull-left" id="sin-subrayar">
+                          <%= link_to "Registrar nuevo alumno", signup_path, 'data-no-turbolink' => false, style: 'color: #3c8dbc!important;' %>
+                        </div>
+                    <% end %>
+                  </div>
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                  <div class="pull-left">
+                    <%= link_to "Perfil", current_user, class: "btn btn-default btn-flat", 'data-no-turbolink' => false %>
+                  </div>
+                  <div class="pull-right">
+                    <%= link_to "Cerrar sesión", logout_path, method: "delete", class: "btn btn-default btn-flat", 'data-no-turbolink' => false %>
+                  </div>
+                </li>
+              </ul>
+            </li>
+        <% else %>
+            <li>
+              <%= link_to signup_path, 'data-no-turbolink' => false do %>
+                  <span class="fa fa-user"></span><span class="hidden-xs"> Registrarse
+                    </span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to login_path, 'data-no-turbolink' => false do %>
+                  <span class="fa fa-sign-in"></span><span class="hidden-xs"> Iniciar
+                      Sesión</span>
+              <% end %>
+            </li>
+        <% end %>
+      </ul>
+    </div>
+    <!-- /.navbar-custom-menu -->
+    <!-- /.container-fluid -->
+  </nav>
+</header>
+<!-- Full Width Column -->
+
+<aside class="main-sidebar">
+  <!-- sidebar: style can be found in sidebar.less -->
+  <section class="sidebar" style="overflow: hidden;">
+    <!-- Sidebar user panel -->
+    <% if logged_in? %>
+        <div class="user-panel">
+          <div class="pull-left image">
+            <img src="<%= current_user.user_image %>" class="img-circle" alt="User Image">
+          </div>
+          <div class="pull-left info">
+            <p><%= link_to current_user, 'data-no-turbolink' => false do %>
+                  <%= current_user.nameAndLastname %>
+              <% end %>
+            </p>
+          </div>
+        </div>
+    <% end %>
+    <!-- search form -->
+    <div class="sidebar-form">
+      <%= form_tag(search_path, :method => "get", id: "search", role: "search") do %>
+          <div class="input-group has-feedback">
+            <%= text_field_tag :search, params[:search], placeholder: "Buscar Usuario...", id: 'navbar-search-input', class: "form-control" %>
+            <span class="fa fa-search form-control-feedback" style="color: gray;"></span>
+          </div>
+      <% end %>
+    </div>
+    <!-- /.search form -->
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+      <% if logged_in? %>
+          <li class="treeview" data-toggle="tooltip" data-placement="right" title="Perfil">
+            <%= link_to current_user, 'data-no-turbolink' => false do %>
+                <i class="fa fa-user media-left"></i><span>Perfil</span>
+                <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            <% end %>
+          </li>
+      <% end %>
+      <li data-toggle="tooltip" data-placement="right" title="Cursos">
+        <%= link_to listado_cursos_path, 'data-no-turbolink' => false do %>
+            <i class="fa fa-graduation-cap"></i>
+            <span>Cursos</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        <% end %>
+      </li>
+      <li class="treeview" data-toggle="tooltip" data-placement="right" title="Nuevo Curso">
+        <%= link_to crear_curso_path, 'data-no-turbolink' => false do %>
+            <i class="fa fa-book"></i>
+            <span>Crear curso</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        <% end %>
+      </li>
+
+      <% if logged_in? %>
+          <li class="treeview" data-toggle="tooltip" data-placement="right" title="Materiales">
+            <%= link_to listado_recursos_path, 'data-no-turbolink' => false do %>
+                <i class="fa fa-thumbs-up"></i>
+                <span>Materiales</span>
+                <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            <% end %>
+          </li>
+          <li data-toggle="tooltip" data-placement="right" title="Mensajes">
+            <%= link_to messages_index_path, 'data-no-turbolink' => false do %>
+                <i class="fa fa-envelope"></i><span> Mensajes</span>
+                <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            <% end %>
+          </li>
+          <li data-toggle="tooltip" data-placement="right" title="Fundaciones">
+            <%= link_to fundaciones_path, 'data-no-turbolink' => false do %>
+                <i class="fa fa-institution"></i><span> Fundaciones</span>
+                <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            <% end %>
+          </li>
+      <% end %>
+      <li data-toggle="tooltip" data-placement="right" title="SU+">
+        <a href="#">
+          <i class="fa fa-heart"></i>
+          <span>Sumemos Uno Más</span>
+          <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+          <li>
+            <%= link_to que_es_path, 'data-no-turbolink' => false do %>
+                <i class="fa fa-circle-o"></i>¿Qué es SU+?
+            <% end %>
+          </li>
+          <li>
+            <%= link_to quienes_somos_path, 'data-no-turbolink' => false do %>
+                <i class="fa fa-circle-o"></i>¿Quiénes somos?
+            <% end %>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+  <!-- /.sidebar -->
+</aside>

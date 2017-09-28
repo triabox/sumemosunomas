@@ -1,0 +1,67 @@
+<!--   TimeLine Clases del curso -->
+<!-- Content Wrapper. Contains page content -->
+<section class="content-wrapper" style="margin-left: 0px!important; border-left: 0px!important;">
+  <!-- Main content -->
+  <section class="content">
+    <!-- row -->
+    <div class="row">
+      <div class="col-md-12">
+        <% if @curso.clases.any? %>
+            <!-- The time line -->
+            <ul class="timeline">
+              <li class="time-label">
+                  <span class="bg-red">
+                    Año 2016        <!-- TODO: hacer que segun el mes me vaya agregando uno de estos -->
+                  </span>
+              </li>
+              <% @curso.clases.each_with_index do |clase, index| %>
+                  <!-- timeline item -->
+                  <li>
+                    <i class="fa fa-user bg-aqua"></i> <!-- TODO que sea un icono segun categoria?? si es deporte una pelota, si es matematica un libro, etc -->
+                    <div class="timeline-item">
+                      <% if es_profesor_de(@curso) %>
+                      <span class="time">
+                       <a><%= link_to "", edit_clase_path(clase.id), class: 'fa fa-pencil-square-o fa-lg', 'data-no-turbolink' => false %>
+                         <%= link_to "", clase, 'data-confirm' => "¿Seguro desea eliminar la clase?", :method => :delete, class: 'fa fa-trash fa-lg', style: 'color: #DD4B39;', 'data-no-turbolink' => false unless esta_publicado(@curso) %>
+                       </a></span>
+                      <% end %>
+                      <h3 class="timeline-header">
+                        <a><%= (index + 1).to_s + ". " %> <%= link_to clase.nombre, clase, 'data-no-turbolink' => false %></a>
+                      </h3>
+                      <h6 class="timeline-header-small"><i class="fa fa-calendar"> </i>
+                        <%= clase.fecha.strftime("%d/%m/%Y") %></h6>
+                      <h6 class="timeline-header-small"><i class="fa fa-clock-o"> </i>
+                        <%= clase.hora_inicio.strftime('%H:%M') + " - " + clase.hora_fin.strftime('%H:%M') %></h6>
+                      <div class="timeline-body">
+                        <strong><%= truncate(clase.descripcion, :ommision => "...", :length => 150) %></strong><br>
+                        <%= truncate(clase.descripcion, :ommision => "...", :length => 150) %>
+                      </div>
+                      <div class="timeline-footer">
+                        <% if es_profesor_de(@curso)  && esta_publicado(@curso) %>
+                            <%= link_to "Administrar", gestionar_clase_path(clase), class: "btn btn-success btn-xs", 'data-no-turbolink' => false %>
+                        <% else %>
+                            <!--  <a class="btn btn-danger btn-xs">Inscribirme</a>-->
+                        <% end %>
+                      </div>
+                    </div>
+                  </li>
+              <% end %>
+        <% end %>
+        <!-- END timeline item -->
+        <li>
+          <i class="fa fa-clock-o bg-gray"></i>
+        </li>
+        </ul>
+        <div class="col-md-offset-5">
+          <%= link_to "Agregar nueva clase", new_clase_path(:curso_id => @curso.id), class: 'btn btn-primary', 'data-no-turbolink' => false unless esta_publicado(@curso) %>
+        </div>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</section>
+<!-- /.content-wrapper -->
+
+

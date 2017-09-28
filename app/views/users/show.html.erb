@@ -1,0 +1,207 @@
+<% provide(:title, @user.nameAndLastname) %>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1 style="visibility: hidden;">Perfil</h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-home"></i>Inicio
+    </a></li>
+    <li class="active">Perfil</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-3">
+      <!-- Profile Image -->
+      <div class="box box-primary">
+        <div class="box-body box-profile">
+          <img src="<%= @user.user_image %>" class="profile-user-img img-responsive img-circle" alt="User Image">
+          <h3 class="profile-username text-center">
+            <%= @user.nameAndLastname %></h3>
+          <p class="text-muted text-center"><%= @user.email %></p>
+          <ul class="list-group list-group-unbordered">
+            <% if es_usuario_fundacion(@user) || @user.becados_por_fundacions.count > 0 %>
+                <li class="list-group-item">
+                  <b>Alumnos apadrinados por nosotros: </b>
+                  <a class="pull-right"><%= @user.becados_por_fundacions.any? ? @user.becados_por_fundacions.count : '0' %></a>
+                </li>
+            <% end %>
+            <% if @cursos_inscriptos.count > 0 %>
+                <li class="list-group-item">
+                  <b>Inscripción a cursos</b> <a class="pull-right"><%= @cursos_inscriptos.count %></a>
+                </li>
+            <% end %>
+            <% if @user.cursos_creados.count > 0 %>
+                <li class="list-group-item">
+                  <b>Cursos creados</b> <a class="pull-right"><%= @user.cursos_creados.count %></a>
+                </li>
+            <% end %>
+            <% unless @user.reputacion.AVG_ReputacionProfesor == 0 %>
+                <li class="list-group-item">
+                  <b>Reputación como profesor</b>
+                  <% @user.reputacion.AVG_ReputacionProfesor.times do %>
+                      <i class="fa fa-star stars pull-right" data-no-turbolink="false"></i>
+                  <% end %>
+                </li>
+            <% end %>
+            <% unless @user.reputacion.AVG_ReputacionAlumno == 0 %>
+                <li class="list-group-item">
+                  <b>Reputación como alumno</b>
+                  <% @user.reputacion.AVG_ReputacionAlumno.times do %>
+                      <i class="fa fa-star stars pull-right" data-no-turbolink="false"></i>
+                  <% end %>
+                </li>
+            <% end %>
+          </ul>
+          <div class="col-md-12">
+            <% if soy(@user) %>
+                <a href="#settings" data-toggle="tab" class="btn btn-primary btn-block" onclick="activarTab('config')">Editar
+                  Perfil</a>
+            <% else %>
+                <%= link_to "Enviar Mensaje", view_conversation_path(@user.id), class: "btn btn-primary btn-block ", 'data-no-turbolink' => false %>
+                <% if soy_fundacion and puede_ser_apadrinado(@user) %>
+                    <%= link_to "Apadrinar", quiero_apadrinar_usuario_path(@user.id), class: "btn btn-danger btn-block", 'data-no-turbolink' => false %>
+                <% end %>
+            <% end %>
+          </div>
+
+          <!-- TODO que se active la pestaña configuracion -->
+          <!-- TODO estaria bueno que al poner editar perfil, se esconda el box Acerca de mi. Porque en el celu queda muy abajo el editar. -->
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- About Me Box -->
+      <% if !@user.experiencia.nil? or !@user.experiencia.nil? or !@user.notas.nil? %>
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Acerca de mí</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <% if !@user.experiencia.nil? %>
+                  <strong><i class="fa fa-book margin-r-5"></i> Experiencia</strong>
+                  <p class="text-muted">
+                    <%= @user.experiencia %>
+                  </p>
+              <% end %>
+              <% if !@habilidades.nil? %>
+                  <strong><i class="fa fa-pencil margin-r-5"></i> Habilidades</strong>
+                  <p>
+                    <% @habilidades.each_with_index do |habilidad, index| %>
+                        <span class='label <%= cycle("label-danger", "label-success", "label-info", "label-warning", "label-primary") %>'><%= habilidad %></span>
+                    <% end %>
+                  </p>
+              <% end %>
+              <% if !@user.notas.nil? %>
+                  <strong><i class="fa fa-file-text-o margin-r-5"></i> Notas</strong>
+                  <p><%= @user.notas %></p>
+              <% end %>
+            </div>
+            <!-- /.box-body -->
+          </div>
+      <% end %>
+      <!-- /.box -->
+      <% if es_usuario_fundacion(@user) and (@user.id != @current_user.id) %>
+          <!-- Map Location Box -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">¿Dónde estamos?</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <%= render :partial => 'locations/map_google', :locals => {:location_value => @user.location, :edit => 'false'} %>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+      <% end %>
+
+    </div>
+    <!-- /.col -->
+    <div class="col-md-9">
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <% if es_usuario_comun(@user) %>
+              <li class="active"><a href="#reputacion" data-toggle="tab">Mi reputación</a></li>
+              <li><a href="#timeline" data-toggle="tab">Mi historial</a></li>
+          <% end %>
+          <li
+          <% if !es_usuario_comun(@user) %>class="active"
+          <% end %>><a href="#cursos" data-toggle="tab">Mis cursos</a></li>
+
+          <% if es_usuario_fundacion(@user) and soy(@user) %>
+              <li><a href="#alumnos" data-toggle="tab">Alumnos apadrinados</a></li>
+
+          <% end %>
+          <% if soy(@user) %>
+              <% if noEsUnaFundacion %>
+                  <li class="pull-right"><a href="#payment" data-toggle="tab">Pago</a></li>
+              <% end %>
+              <li class="pull-right"><a href="#settings" data-toggle="tab">Configuración</a></li>
+          <% end %>
+        </ul>
+        <div class="tab-content">
+          <% if es_usuario_comun(@user) %>
+              <div class="active tab-pane" id="reputacion">
+                <%= render 'reputacion/show', {:id => @user} %>
+              </div>
+              <div class="tab-pane" id="timeline">
+                <%= render :partial => 'tab_historial', :locals => {:view => 'edit'} %>
+              </div>
+          <% end %>
+          <!-- Tab Mis Cursos -->
+          <div id="cursos"
+               <% if !es_usuario_comun(@user) %>class="active tab-pane"
+               <% else %>class="tab-pane"
+               <% end %>>
+            <%= render :partial => 'tab_cursos', :locals => {:view => 'edit', :btn_label => 'Guardar'} %>
+          </div>
+          <% if soy(@user) %>
+              <% if noEsUnaFundacion %>
+                  <div class="tab-pane" id="payment">
+                    <%= render :partial => 'users/tab_payment', :locals => {:view => 'show', :btn_label => 'Guardar', :user => @user} %>
+                  </div>
+              <% else %>
+                  <div class="tab-pane" id="alumnos">
+                    <section class="content-wrapper" style="margin-left: 0px!important; border-left: 0px!important;">
+                      <% if @user.becados_por_fundacions.any? %>
+                          <%= render :partial => 'users/list_users_becados', :locals => {:users => @becados_por_fundacion} %>
+                      <% else %>
+                          <h3 align="center" style="margin-top: 50px!important; line-height: 200%;">
+                            <i class="fa fa-bullhorn"></i>
+                            Aún no has apradinado a ningún alumno. <br><a>¡Averiguá como hacerlo!</a>
+                          </h3>
+                      <% end %>
+                    </section>
+                  </div>
+              <% end %>
+              <div class="tab-pane" id="settings">
+                <section class="content-wrapper" style="margin-left: 0px!important; border-left: 0px!important;">
+                  <% if soy_fundacion %>
+                      <%= render :partial => 'tab_form_fundacion', :locals => {:view => 'edit', :btn_label => 'Guardar'} %>
+                  <% else %>
+                      <%= render :partial => 'tab_form_user', :locals => {:view => 'edit', :btn_label => 'Guardar'} %>
+                  <% end %>
+                </section>
+              </div>
+          <% end %>
+          <!-- /.tab-pane -->
+        </div>
+        <!-- /.tab-content -->
+      </div>
+      <!-- /.nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</section>
+<!-- /.content -->
+
+<script>
+  //Por el Tap es necesario para que funcione la geolocalizacion
+  $("a[href='#settings']").on('shown.bs.tab', function (e) {
+    setTimeout(function () {
+      google.maps.event.trigger(map, 'resize');
+      map.setCenter(pos);
+    }, 50);
+  });
+</script>

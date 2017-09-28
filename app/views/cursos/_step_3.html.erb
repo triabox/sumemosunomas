@@ -1,0 +1,80 @@
+<h2 style="color: #3c8dbc!important; font-size: large !important; margin-top: 0px!important;">
+  <b>¿Cuánto durará el curso?</b>
+</h2>
+<div class="col-md-12" style="margin-bottom: 20px;">
+  <h5 class="text-muted text-center col-md-offset-1 col-md-10" align="justify">
+    <b>Por favor ingrese la fecha de inicio y finalización del curso</b>
+  </h5>
+</div>
+<div class="form-horizontal">
+  <div class="form-group has-feedback">
+      <%= f.label :fecha_inicio, "Inicio del curso:", class: "control-label col-md-2" %>
+    <div class='col-md-9 col-xs-12'>
+      <% if view == 'new' %>
+          <div class='input-group' id='datetimepicker6'>
+            <span class="input-group-addon" id="calendar1">
+              <span class="fa fa-calendar" aria-hidden="true"></span>
+            </span>
+            <div onclick="opendatetimepicker('calendar1')">
+              <%= f.text_field :fecha_inicio, :input_html => {:id => "datetimepicker"}, :value => (@curso.fecha_inicio.blank? ? '' : @curso.fecha_inicio.strftime('%d/%m/%Y')),
+                               placeholder: "Día en que iniciará el curso", class: 'form-control date' %>
+            </div>
+          </div>
+      <% else %>
+          <div class='input-group date' id='datetimepicker1'>
+            <span class="input-group-addon" id="calendar1">
+              <span class="fa fa-calendar" aria-hidden="true"></span>
+            </span>
+            <div onclick="opendatetimepicker('calendar1')">
+              <%= f.text_field :fecha_inicio, :input_html => {:id => "datetimepicker"}, :value => (@curso.fecha_inicio.blank? ? '' : @curso.fecha_inicio.strftime('%d/%m/%Y')),
+                               placeholder: "Día en que iniciará el curso", class: 'form-control', :readonly => true %>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group has-feedback">
+      <%= f.label :fecha_fin, "Finalización del curso:", class: "control-label col-sm-2" %>
+    <div class='col-md-9 col-xs-12'>
+      <% if view == 'new' %>
+          <div class='input-group date' id='datetimepicker7'>
+                             <span class="input-group-addon" id="calendar2">
+                              <span class="fa fa-calendar" aria-hidden="true"></span>
+                          </span>
+            <div onclick="opendatetimepicker('calendar2')">
+              <%= f.text_field :fecha_fin, :input_html => {:id => "datetimepicker"}, :value => (@curso.fecha_fin.blank? ? '' : @curso.fecha_fin.strftime('%d/%m/%Y')),
+                               placeholder: "Día en que finalizará el curso", class: 'form-control' %></div>
+          </div>
+      <% else %>
+          <div class='input-group date' id='datetimepicker1'>
+                             <span class="input-group-addon" id="calendar2">
+                              <span class="fa fa-calendar" aria-hidden="true"></span>
+                          </span>
+            <div onclick="opendatetimepicker('calendar2')">
+              <%= f.text_field :fecha_fin, :input_html => {:id => "datetimepicker"}, :value => (@curso.fecha_fin.blank? ? '' : @curso.fecha_fin.strftime('%d/%m/%Y')),
+                               placeholder: "Día en que finalizará el curso", class: 'form-control', :readonly => true %></div>
+          </div>
+      <% end %>
+
+    </div>
+    </div>
+
+  <div class="form-group has-feedback">
+      <%= f.label :location, "Ubicación:", class: "control-label col-md-2" %>
+    <div class='col-md-9 col-xs-12'>
+        <%= fields_for :location do |location| %>
+            <%= render :partial => 'locations/show', :locals => {:location => location, :location_value => @curso.location} %>
+        <% end %>
+      <!-- /.box-body -->
+    </div>
+    <div class="form-group">
+      <div>
+        <button type="button" class="btn btn-primary prev-step col-xs-3 col-xs-offset-3" style="margin-top:15px;">Anterior</button>
+      </div>
+      <div>
+        <button type="button" class="btn btn-danger three-next-step col-xs-3 col-xs-offset-1" style="margin-top:15px;">Siguiente</button>
+      </div>
+    </div>
+  </div>
+</div>

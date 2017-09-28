@@ -1,0 +1,12 @@
+<div class="form-group">
+  <% if edit == 'true' %>
+      <%= location.text_field :address, class: 'form-control',placeholder: "Ingresar Lugar", value: location_value.address %>
+  <% end %>
+</div>
+<div class="column">
+  <div id="map-geo" class="map-content" style="height: 300px; width: auto"></div>
+</div>
+
+<%= render :partial => 'locations/javascritp', :locals => {:location_value => location_value}, 'data-no-turbolink' => false  %>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdE3f3MTZwBgQRgG4V-urwsCf-GXiryXY&signed_in=true&libraries=places&callback=initMap"></script>

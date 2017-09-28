@@ -1,0 +1,26 @@
+<table class="table table-hover table-responsive">
+  <tr>
+    <th style="width: 10px"></th>
+    <th>Clase</th>
+    <th>Fecha</th>
+    <th style="width: 40px"></th>
+  </tr>
+  <% @curso.clases.each_with_index do |clase, index| %>
+      <tr>
+        <td><%= (index + 1).to_s + '.' %></td>
+        <td><b><%= clase.nombre %></b></td>
+        <td><span><i class="fa fa-calendar color-grey"></i>
+          <%= clase.fecha.strftime("%d/%m/%Y") %></span></td>
+        <td>
+          <div class="row">
+            <%= link_to "", edit_clase_path(clase.id), class: 'fa fa-pencil fa-lg', style: 'color: black;', 'data-no-turbolink' => false %>
+            <%= link_to "", clase, 'data-confirm' => "¿Seguro desea eliminar la clase?", :method => :delete, class: 'fa fa-trash fa-lg', style: 'color: black;', 'data-no-turbolink' => false %>
+          </div>
+        </td>
+      </tr>
+  <% end %>
+</table>
+<div align="center">
+  <%= link_to "Agregar nueva clase", new_clase_path(:curso_id => @curso.id), class: 'btn btn-primary pull-center', 'data-no-turbolink' => false unless (esta_publicado(@curso) || view == 'edit') %>
+  <br>
+</div>

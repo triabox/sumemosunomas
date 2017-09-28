@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nombre: MyString
+  descripcion: MyString
+  contenido: MyString
+  lugar: MyString
+  fecha_inicio: 2016-08-01
+  fecha_fin: 2016-08-01
+  cupos: 1
+  relacion_b_nb: MyString
+
+two:
+  nombre: MyString
+  descripcion: MyString
+  contenido: MyString
+  lugar: MyString
+  fecha_inicio: 2016-08-01
+  fecha_fin: 2016-08-01
+  cupos: 1
+  relacion_b_nb: MyString

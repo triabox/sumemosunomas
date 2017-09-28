@@ -1,0 +1,133 @@
+<% meta_tag :description, truncate(@curso.descripcion, :ommision => "...", :length => 150) %>
+<% meta_tag :title, truncate(@curso.nombre, :ommision => "...", :length => 150) %>
+<% meta_tag :url_web, "https://#{request.host+request.fullpath}" %>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1 style="visibility: hidden;">Cursos</h1>
+  <ol class="breadcrumb">
+    <li><%= link_to listado_cursos_path, 'data-no-turbolink' => false do %><i class="fa fa-pencil"></i>Todos los cursos
+      <% end %></li>
+    <li class="active pull">Curso <%= @curso.nombre %></li>
+  </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+  <!--   Datos Curso -->
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <!-- Widget: user widget style 1 -->
+      <div class="box box-widget widget-user-2">
+        <div class="widget-user-header <%= @curso.finalizado ? 'bg-red' : 'bg-green' %>">
+          <div class="widget-user-image">
+            <img src="<%= @curso.user.user_image %>" class="img-circle" alt="User Avatar"> <%= render :partial => 'layouts/share_button.html', :locals => {:test => "Curso en Sumemos uno mas : "+@curso.nombre, :url => request.fullpath} %>
+          </div>
+          <h3 class="widget-user-username"><%= @curso.nombre %>
+            <a style="float: right;"><% if es_profesor_de(@curso) %><%= link_to "", edit_curso_path(@curso), class: 'fa fa-pencil-square-o', style:'color: white; float:rigth;','data-no-turbolink' => false %><% end %></a>
+          </h3>
+          <h5 class="widget-user-desc"><%= @curso.user.nameAndLastname %></h5>
+        </div>
+        <div class="box-footer no-padding">
+          <ul class="nav nav-stacked">
+            <% if @curso.finalizado %>
+                <li><a><span class="fa fa-dot-circle-o" aria-hidden="true"></span> Curso Finalizado</a></li>
+            <% end %>
+            <li><a href="#"><span class="fa fa-map-marker" aria-hidden="true"></span>
+              <%= " " + @curso.location.address.to_s %></a></li>
+            <li><a href="#"><span class="fa fa-calendar" aria-hidden="true"></span>
+              <%= " " + @curso.fecha_inicio.strftime("%d/%m/%Y") + " - " + @curso.fecha_fin.strftime("%d/%m/%Y") %>
+            </a>
+            </li>
+            <li><a href="#"><span class="fa fa-users" aria-hidden="true"></span>
+              <% if es_profesor_de(@curso) %>
+                  <%= cantidad_alumnos_en(@curso) + " alumnos inscriptos" %>
+              <% else %>
+                  <%= @curso.cupos.to_s + " lugares disponibles" %>
+              <% end %></a></li>
+            <li><a href="#"><span class="fa fa-user-plus" aria-hidden="true"></span>
+              <%= @curso.relacion_b_nb.to_s + " becas disponibles" %></a></li>
+            <li><a href="#"><span class="fa fa-list-ol" aria-hidden="true"></span>
+              <%= @curso.clases.count.to_s + " clases" %></a></li>
+          </ul>
+        </div>
+        <div class="box-footer" align="justify">
+          <ul class="nav nav-stacked">
+            <li><b>Descripción:</b> <%= simple_format(@curso.descripcion)%>
+            </li>
+            <li><b>Contenido:</b> <%= simple_format(@curso.contenido) %></li>
+          </ul>
+        </div>
+
+        <div class="box-footer" align="justify">
+          <ul class="nav nav-stacked">
+            <% if logged_in? %>
+              <% if es_profesor_de(@curso) and !esta_finalizado(@curso) %>
+                  <% if !esta_publicado(@curso) %>
+                      <%= link_to "Publicar", publicar_curso_path(@curso), class: "btn btn-success btn-xs pull-right", 'data-no-turbolink' => false %>
+                  <% else %>
+                    <%= link_to 'Pedir materiales', new_recurso_path(:id => @curso.id), class: "btn btn-primary btn-xs", 'data-no-turbolink' => false %>
+                    <%= link_to 'Finalizar', want_to_finish_curso_path(@curso), class: "btn btn-danger btn-xs", 'data-no-turbolink' => false %>
+                    <% if @curso.activo %>
+                        <%= link_to "¿Desea eliminar el curso?", @curso, 'data-confirm' => "¿Seguro desea eliminar el curso?", :method => :delete, class: "pull-right", 'data-no-turbolink' => false %>
+                    <% end %>
+                  <% end %>
+              <% elsif soy_fundacion %>
+                  <% if quedan_cupos_becados(@curso) and esta_publicado(@curso) %>
+                      <%= link_to 'Inscribir alumno', inscribirBecado_path(:id => @curso.id), class: "btn btn-success btn-xs", 'data-no-turbolink' => false %>
+                  <% end %>
+              <% elsif !esta_inscripto_a(@curso) and !esta_finalizado(@curso) and quedan_cupos(@curso) and esta_publicado(@curso) %>
+                  <%= link_to 'Inscribirme', inscribir_a_curso_path(:id => current_user.id ,:curso_id => @curso.id), class: "btn btn-success btn-xs", 'data-no-turbolink' => false %>
+              <% elsif esta_inscripto_a(@curso) and no_pago(@curso) %>
+                  <%= link_to "Pagar",  edit_inscripto_path(@miInscripcion.id), class: "btn btn-danger btn-xs", 'data-no-turbolink' => false %>
+              <% end %>
+              <% if esta_finalizado(@curso) and no_complete_la_encuesta(@curso) %>
+                  <%= link_to 'Completar encuesta', edit_encuest_path(:curso_id => @curso.id), class: "btn btn-warning btn-xs", 'data-no-turbolink' => false %>
+              <% end %>
+              <% if esta_finalizado(@curso) and completaron_mi_encuesta(@curso) %>
+                  <%= link_to 'Mira tu puntuación!', show_encuest_path(:curso_id => @curso.id), class: "btn btn-success btn-xs", 'data-no-turbolink' => false %>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <!-- /.widget-user -->
+    </div>
+  </div>
+  <!--./ Datos Curso -->
+
+  <div class="col-md-6 col-md-offset-3">
+    <div class="nav-tabs-custom">
+      <%= render :partial => 'locations/map_google', :locals => {:location_value => @curso.location, :edit => 'false'} %>
+    </div>
+  </div>
+  <div class="col-md-6 col-md-offset-3" style="margin-top: 15px;">
+    <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#clases" data-toggle="tab">Clases</a></li>
+        <% if es_profesor_de(@curso) %>
+          <li><a href="#inscriptos" data-toggle="tab">Inscriptos</a></li>
+        <% end %>
+        <% if @recursos_solicitados.any? %>
+            <li><a href="#recursos" data-toggle="tab">Materiales Solicitados</a></li>
+        <% end %>
+      </ul>
+      <section class="tab-content">
+        <div class="active tab-pane" id="clases">
+          <%= render :partial => 'tab_clases', :locals => {:view => 'show'} %>
+        </div>
+        <% if es_profesor_de(@curso) %>
+          <div class="tab-pane" id="inscriptos">
+            <%= render :partial => 'tab_inscriptos', :locals => {:view => 'show'} %>
+          </div>
+        <% end %>
+        <% if @recursos_solicitados.any? %>
+            <div class="tab-pane" id="recursos">
+              <%= render :partial => 'tab_recursos_solicitados', :locals => {:view => 'show'} %>
+            </div>
+        <% end %>
+      </section>
+    </div>
+    <!-- /.col -->
+  </div>
+</section>
+
+

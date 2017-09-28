@@ -1,0 +1,40 @@
+<!-- Info boxes -->
+<section class="content">
+  <% if users.any? %>
+      <div class="col-md-12">
+        <div class="row col-md-offset-1 col-md-10 col-sm-12">
+          <ul class="users-list box-usuarios-becados clearfix" style="text-align: center; justify-content: center;">
+            <% users.each do |user| %>
+                <li class="becados center-block" style="  height: 250px;!important; ">
+                  <img src="<%= user.user_image %>" class="profile-user-img img-responsive img-circle" alt="User Image">
+                  <h6 class="profile-username text-center" id="sin-subrayar">
+                    <%= link_to user, 'data-no-turbolink' => false, style: 'color: black!important;' do %>
+                        <%= user.nameAndLastname %>
+                    <% end %>
+                  </h6>
+                  <div>
+                    <h6 class="text-muted text-center user-icon"><%= user.email %></h6>
+                  </div>
+                  <% if esUsuarioAdministrador and es_usuario_fundacion(user) %>
+                      <%= link_to foundation_desactivar_path(:id => user.id), 'data-confirm' => "¿Seguro desea eliminar la fundacion?", style: 'color: black', 'data-no-turbolink' => false do %>
+                          <i class="fa fa-trash-o fa-2x"></i>
+                      <% end %>
+                  <% end %>
+                  <%= link_to view_conversation_path(user.id), style: 'color:black;', 'data-no-turbolink' => false do %>
+                      <i class="fa fa-envelope-o fa-2x"></i>
+                  <% end %>
+                </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+  <% else %>
+      <h1>
+        <i class="fa fa-thumbs-down"></i>
+        Lo sentimos! No hay usuarios para la búsqueda realizada
+      </h1>
+  <% end %>
+  <!-- /.info-box -->
+  <!-- /.col -->
+</section>
+

@@ -1,0 +1,32 @@
+<div class="form-group has-feedback">
+  <div class="col-sm-5">
+    <%= location.text_field :address, class: 'form-control', placeholder: "Dirección", value: location_value.address %>
+  </div>
+  <div class="col-sm-5">
+    <%= location.text_field :number, class: 'form-control', placeholder: "Número", value: location_value.number %>
+  </div>
+</div>
+<div class="form-group has-feedback">
+  <div class="col-sm-5">
+    <%= location.text_field :floor, class: 'form-control', placeholder: "Piso", value: location_value.floor %>
+  </div>
+  <div class="col-sm-5">
+    <%= location.text_field :dep, class: 'form-control', placeholder: "Departamento", value: location_value.dep %>
+  </div>
+</div>
+<div class="form-group has-feedback">
+  <div class="col-sm-5">
+    <%= location.text_field :state, class: 'form-control', placeholder: "Estado", value: location_value.state %>
+    <i class="fa fa-bookmark form-control-feedback" aria-hidden="true"></i>
+  </div>
+  <div class="col-sm-5">
+    <%= location.text_field :city, class: 'form-control', placeholder: "Ciudad", value: location_value.city %>
+    <i class="fa fa-bookmark form-control-feedback" aria-hidden="true"></i>
+  </div>
+</div>
+<div class="form-group has-feedback">
+  <div class="col-sm-5">
+    <%= location.text_field :postal_code, class: 'form-control', placeholder: "Código Postal", value: location_value.postal_code %>
+    <i class="fa fa-bookmark form-control-feedback" aria-hidden="true"></i>
+  </div>
+</div>

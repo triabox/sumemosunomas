@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Lista de inscriptos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Inscripto</th>
+      <th>curso</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @inscriptos.each do |inscripto| %>
+      <tr>
+        <td><%= inscripto.user.nameAndLastname %></td>
+        <td><%= inscripto.curso.nombre %></td>
+        <td><%= link_to 'Ver', inscripto, 'data-no-turbolink' => false %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>

@@ -1,0 +1,32 @@
+<section class="content-header">
+  <h1 style="visibility: hidden;">Apadrinar</h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-home"></i>Inicio
+    </a></li>
+    <li class="active pull">Apadrinar usuario</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="example-modal">
+    <div class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"> Estás seguro que deseas apadrinar este usuario?</h4>
+          </div>
+          <div class="modal-footer">
+            <%= link_to 'Aceptar', apadrinar_usuario_path(@usuario_a_apadrinar.id), class: "btn btn-primary", 'data-no-turbolink' => false %>
+            <%= link_to 'Cancelar', root_path, class: "btn btn-default pull-left" , 'data-no-turbolink' => false%>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+  </div>
+  <!-- /.example-modal -->
+</section>
+
+
+

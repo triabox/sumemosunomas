@@ -1,0 +1,53 @@
+<section class="content-wrapper" style="margin-left: 0!important; border-left: 0!important;">
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <% if @alumnos_inscriptos.any? %>
+            <ul class="timeline">
+              <li class="time-label">
+                  <span class="bg-red">Curso <%= @curso.nombre %></span>
+              </li>
+              <% @alumnos_inscriptos.each_with_index do |inscripto, index| %>
+                  <% user = usuarioById(inscripto.user_id) %>
+                  <li>
+                    <i class="fa fa-user bg-aqua"></i>
+                    <div class="timeline-item">
+                      <h3 class="timeline-header"><%= link_to (index + 1).to_s + ". "+user.name+"
+                      "+user.lastname, user, 'data-no-turbolink' => false %> </h3>
+                      <h6 class="timeline-header-small"><i class="fa fa-calendar"> </i>
+                        <%= inscripto.created_at.strftime("%d/%m/%Y") %></h6>
+                      <% if es_profesor_de(@curso) %>
+                          <div class="timeline-body">
+                            <strong>Tipo de Pago:</strong> <%= inscripto.tipe %><br>
+                            <% if inscripto.tipe != 'Becado'%>
+                              <strong>Estado:</strong> <%= getStatedPayment(inscripto)%><br>
+                            <%end%>
+                          </div>
+                          <div class="timeline-footer">
+                            <% if !pago_curso(inscripto, @curso) %>
+                                <%= link_to "Marcar pagado",
+                                            mark_payment_path(inscripto.id), class: "btn btn-success
+                                            btn-xs", 'data-no-turbolink' => false %>
+                            <% end %>
+                          </div>
+                      <% end %>
+                    </div>
+                  </li>
+              <% end %>
+              <li>
+                <i class="fa fa-clock-o bg-gray"></i>
+              </li>
+        <% else %>
+            </ul>
+            <br>
+            <h2 style="color: gray">
+              <span class="fa fa-warning"></span>
+              No se cuenta con alumnos inscriptos
+            </h2>
+        <% end %>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+</section>

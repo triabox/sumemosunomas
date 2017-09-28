@@ -1,0 +1,43 @@
+<section class="content-header">
+  <h1 style="visibility: hidden">Nuevo curso</h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-home"></i>Inicio
+    </a></li>
+    <li class="active">Nuevo Curso</li>
+    <li><%= link_to @curso, 'data-no-turbolink' => false do %><i class="fa fa-pencil"></i> Curso <%= @curso.nombre %>
+      <% end %></li>
+    <li class="active">Editar Clases</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="col-md-4 col-xs-12 col-md-offset-4">
+    <div class="box box-primary">
+      <div class="box-header">
+        <div align="center">
+          <h1 class="color-blue">¡Felicitaciones!</h1>
+          <h3>Se ha creado tu curso de <b><%=@curso.nombre %></b></h3>
+          <h4>Se dictará los días<%=" Lunes de " + horarios[0].to_s + " a " + horarios[7].to_s unless !horarios[0].present? %>
+            <%=" Martes de " + horarios[1].to_s + " a " + horarios[8].to_s unless !horarios[1].present? %>
+            <%=" Miércoles de " + horarios[2].to_s + " a " + horarios[9].to_s unless !horarios[2].present? %>
+            <%=" Jueves de " + horarios[3].to_s + " a " + horarios[10].to_s unless !horarios[3].present? %>
+            <%=" Viernes de " + horarios[4].to_s + " a " + horarios[11].to_s unless !horarios[4].present? %>
+            <%=" Sábados de " + horarios[5].to_s + " a " + horarios[12].to_s unless !horarios[5].present? %>
+            <%=" Domingos de " + horarios[6].to_s + " a " + horarios[13].to_s unless !horarios[6].present? %>
+           </h4>
+          <br>
+          <h5 class="color-grey">(Si lo desea puede editar y personalizar las clases)</h5>
+        </div>
+      </div>
+      <div class="box-body">
+        <%= render :partial => 'clases/tabla_clases', :locals => {:curso => @curso, :view => 'new'} %>
+        <div align="center">
+          <br><br>
+          <% if !esta_publicado(@curso) %>
+              <h5 class="color-grey">Si querés publicar estos horarios y que comiencen a inscribirse al curso haz click en Publicar!</h5>
+              <%= link_to "Publicar", publicar_curso_path(@curso), class: "btn btn-success pull-center", 'data-no-turbolink' => false %>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

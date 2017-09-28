@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @recurso.nombre %>
+</p>
+
+<p>
+  <strong>Curso asociado:</strong>
+  <%= link_to @recurso.curso.nombre, @recurso.curso, 'data-no-turbolink' => false %>
+</p>
+
+<p>
+  <strong>Solicitante:</strong>
+  <%= link_to @recurso.user.nameAndLastname, @recurso.user, 'data-no-turbolink' => false %>
+</p>
+
+<%= link_to 'Editar', edit_recurso_path(@recurso), 'data-no-turbolink' => false %>

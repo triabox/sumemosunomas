@@ -1,0 +1,23 @@
+<% provide(:title, 'Usuarios') %>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1 style="visibility: hidden">Usuarios</h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-home"></i>Inicio
+    </a></li>
+    <li class="active">Usuarios</li>
+  </ol>
+</section>
+<h2 style="color: #3c8dbc!important;">Los miembros de <b>Sumemos Uno Más</b></h2>
+<div class="col-md-12" style="margin: 5px 0 20px 0;">
+  <p class="text-muted text-center col-md-offset-1 col-md-10" align="justify" style="font-size: medium;">
+    Hoy en día más y más usuarios se siguen sumando a nuestro proyecto
+  </p>
+</div>
+<div class="row">
+  <div class="col-md-offset-2 col-md-8 col-xs-10 col-xs-offset-1" style="padding: 0px!important;">
+    <div class="box box-primary">
+      <%= render :partial => 'list_users', :locals => {:users => @users} %>
+    </div>
+  </div>
+</div>

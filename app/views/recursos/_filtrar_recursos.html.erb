@@ -1,0 +1,34 @@
+<div class="col-md-6 col-md-offset-3">
+  <div class="box box-primary">
+    <%= form_tag buscarRecursos_path, :method => 'get', :id => "searchRecurso" do %>
+        <div class="box-header">
+          <h3 class="box-title">Búsqueda Avanzada</h3>
+        </div>
+        <div class="box-body">
+          <!-- Minimal style -->
+          <!--Contenido/Profesor -->
+          <div class="form-group" style="margin: 0 15px;">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-globe  fa-2x"></i>
+              </div>
+              <%= text_field_tag :nombre, params[:nombre], placeholder: "Palabras claves", class: 'form-control' %>
+              <%= select_tag "tipe", options_for_select(@categorias,
+                                                                 :selected => params[:tipe]), {include_blank: 'Seleccione una categoría', class: 'form-control'} %>
+            </div>
+            <!-- /.input group -->
+
+              <div class=" col-sm-2 no-padding  pull-right" style="margin:15px;">
+                <%= submit_tag "Buscar", class: "btn btn-success", style:"background: #00A65A;" %>
+              </div>
+
+          </div>
+          <!-- /.form group -->
+    <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+

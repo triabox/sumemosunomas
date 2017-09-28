@@ -1,0 +1,54 @@
+<% provide(:title, 'Notificaciones') %>
+<!-- Main content -->
+<section class="content-header">
+  <h1 style="visibility: hidden">Notificaciones</h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-home"></i>Inicio</a></li>
+    <li class="active">Notificaciones</li>
+  </ol>
+</section>
+<section class="content">
+  <!-- row -->
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <% if @notificaciones.any? %>
+          <ul class="timeline">
+            <li class="time-label">
+                  <span class="bg-green">
+                    Notificaciones
+                  </span>
+            </li>
+            <% @notificaciones.each do |notificacion| %>
+                <!-- The time line -->
+                <!-- timeline item -->
+                <li>
+                  <i class="fa fa-bell bg-aqua"></i>
+                  <div class="timeline-item">
+                        <span class="time"><i class="fa fa-clock-o"></i>
+                          <%= time_ago_in_words(notificacion.created_at) %></span>
+                    <h6 class="timeline-header">
+                          <span class=" <%= notificacion.is_view ? '' : 'negrita' %>"></i>
+                            <%= link_to notificacion.mensaje, ver_notificacion_path(notificacion),
+                                        style: "color:black; font-size: 15px;", 'data-no-turbolink' => false %>
+                          </span>
+                    </h6>
+                  </div>
+                </li>
+            <% end %>
+            <li>
+              <i class="fa fa-clock-o bg-gray"></i>
+            </li>
+          </ul>
+          <!-- END timeline item -->
+      <% else %>
+          <h1>
+            <i class="fa fa-bell"></i>
+            Ups! No tienes notificaciones
+          </h1>
+      <% end %>
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</section>
+<!-- /.content -->
