@@ -1,4 +1,6 @@
 Rails.application.configure do
+
+  require 'socket'
   # Settings specified here will take precedence over those in config/application.rb.
   config.dependency_loading = true if $rails_rake_task
 
@@ -82,7 +84,7 @@ Rails.application.configure do
   
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  host = 'sumemos-uno-mas.herokuapp.com'
+  host = Socket.gethostname ####'sumemos-uno-mas.herokuapp.com'
   config.action_mailer.default_url_options = { host: host }
   ActionMailer::Base.smtp_settings = {
       :address        => 'smtp.sendgrid.net',

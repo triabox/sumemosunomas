@@ -17,11 +17,11 @@
   <meta name="twitter:description" content="<%= yield_meta_tag(:description, 'Es un sitio web que brinda oportunidad de inscripción gratuita a cursos de interés a personas que no tengan los medios necesarios para hacerlo.') %>"/>
   <meta name="twitter:title" content="<%= yield_meta_tag(:title, 'Sumemos Uno Mas') %>"/>
   <meta name="twitter:site" content="@SumemosUnoMas"/>
-  <meta name="twitter:domain" content="sumemos-uno-mas.herokuapp.com"/>
+  <meta name="twitter:domain" content=""<%= "#{request.host}" %>"/>
   <meta name="twitter:image:src" content="<%= yield_meta_tag(:url, "https://#{request.host}/sumemos-uno-mas-01.png") %>"/>
   <meta name="twitter:domain" content="SumemosUnoMas"/>
 
-  <link type="image/x-icon" href="<%= "https://#{request.host}/sumemos-uno-mas-01.png"%>" rel="shortcut icon" />
+  <link type="image/x-icon" href="<%= "https://#{request.host}/rails serversumemos-uno-mas-01.png"%>" rel="shortcut icon" />
 
   <%= stylesheet_link_tag 'application', media: 'all',
                           'data-turbolinks-track' => true %>
