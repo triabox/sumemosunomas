@@ -100,8 +100,8 @@ class Payment < ActiveRecord::Base
     optionsSAR_comercio[:MERCHANT]= "15883" #curso.user.payment_type.merchant
 
     optionsSAR_comercio[:EncodingMethod]="XML"
-    optionsSAR_comercio[:URL_OK]= "http://"+Socket.gethostname+"//mark_payment_todopago/"+self.id.to_s+"/OK/payment"
-    optionsSAR_comercio[:URL_ERROR]= "http://"+Socket.gethostname+"//mark_payment_todopago/"+self.id.to_s+"/ERROR/payment"
+    optionsSAR_comercio[:URL_OK]= "http://sumemosunomas.herokuapp.com//mark_payment_todopago/"+self.id.to_s+"/OK/payment"
+    optionsSAR_comercio[:URL_ERROR]= "http://sumemosunomas.herokuapp.com//mark_payment_todopago/"+self.id.to_s+"/ERROR/payment"
     #optionsSAR_comercio[:URL_OK]= "http://localhost:3000//mark_payment_todopago/"+self.id.to_s+"/OK/payment"
     #optionsSAR_comercio[:URL_ERROR]= "http://localhost:3000//mark_payment_todopago/"+self.id.to_s+"/ERROR/payment"
     #optionsSAR_comercio[:EMAILCLIENTE]= curso.user.email
